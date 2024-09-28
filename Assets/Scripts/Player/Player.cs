@@ -118,7 +118,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
             fallSpeed = JumpSpeed;
-            CanJump = false;
         }
         targetVelocity.Normalize();
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
