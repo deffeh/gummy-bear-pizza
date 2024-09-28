@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public Button GoToTitleScreenButton;
     public SettingsMenu Settings;
     public bool isPaused = false;
+    public bool AllowPause = true;
 
     void Awake() 
     {
@@ -26,7 +27,7 @@ public class PauseMenu : MonoBehaviour
         GoToTitleScreenButton.onClick.AddListener(GoToTitleScreen);
     }
 
-    private void OpenSettings() {
+    public void OpenSettings() {
         Settings.Show();
     }
 
@@ -35,6 +36,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        if (!AllowPause) {return;}
         if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
             isPaused = !isPaused;
             PauseContainer.SetActive(isPaused);
