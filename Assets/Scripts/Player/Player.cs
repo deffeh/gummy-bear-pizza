@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Human = Human.Instance;
         CanInteract = false;
+        SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
     }
 
     // Update is called once per frame
@@ -197,5 +198,11 @@ public class Player : MonoBehaviour
     public void AddHealth(int HealAmount)
     {
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + HealAmount);
+    }
+
+    public void SetDogVision(bool isOn) {
+        if (PlayerCamera.GetComponent<DogVisionPostProcess>()) {
+            PlayerCamera.GetComponent<DogVisionPostProcess>().enabled = isOn;
+        }
     }
 }
