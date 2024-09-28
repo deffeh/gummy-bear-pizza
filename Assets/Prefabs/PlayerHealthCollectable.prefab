@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1226447696158665860}
   - component: {fileID: 927588402309750482}
-  - component: {fileID: 3630700620407047175}
   - component: {fileID: 4746652638792906551}
+  - component: {fileID: 3461273837748188591}
   m_Layer: 0
-  m_Name: HealthPickup
+  m_Name: PlayerHealthCollectable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,19 +56,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3630700620407047175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410135587662733373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02440b594f67da04fbdaadc873927443, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealAmount: 10
 --- !u!114 &4746652638792906551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +69,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amp: 0.25
+--- !u!114 &3461273837748188591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410135587662733373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02440b594f67da04fbdaadc873927443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealAmount: 10
 --- !u!1001 &2812747447434550103
 PrefabInstance:
   m_ObjectHideFlags: 0

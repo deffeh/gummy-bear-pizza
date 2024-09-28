@@ -24,7 +24,6 @@ public abstract class CollectableBase : MonoBehaviour
     {
         Debug.Log("Pickup collected");
         Collect(other);
-        Destroy(gameObject);
     }
 
     public abstract void Collect(Collider other);
