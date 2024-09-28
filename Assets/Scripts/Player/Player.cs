@@ -25,6 +25,10 @@ public class Player : MonoBehaviour
     public float AccelerationSpeed;
     public float JumpSpeed;
     public bool CanJump;
+    public float DashSpeed;
+    public float DashCoolDown;
+    private float DashCooldownRemaining;
+    private bool CanDash;
     private Vector3 StrafeVelocity;
 
     // Bark
@@ -118,10 +122,14 @@ public class Player : MonoBehaviour
         if(Input.GetKey(KeyCode.D))
             targetVelocity += transform.right;
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
-        {
             fallSpeed = JumpSpeed;
-        }
         targetVelocity.Normalize();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
+        {
+            CanDash = false;
+            DashCooldownRemaining = DashCoolDown;
+            StrafeVelocity += targetVelocity * DashSpeed;
+        }
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 
     }
@@ -145,6 +153,15 @@ public class Player : MonoBehaviour
             {
                 CanBite = true;
                 BiteCooldownRemaining = 0;
+            }
+        }
+        if (!CanDash)
+        {
+            DashCooldownRemaining -= Time.deltaTime;
+            if (DashCooldownRemaining <= 0)
+            {
+                CanDash = true;
+                DashCooldownRemaining = 0;
             }
         }
     }
