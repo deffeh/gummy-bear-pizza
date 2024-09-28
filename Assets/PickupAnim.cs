@@ -7,7 +7,7 @@ public class PickupAnim : MonoBehaviour
 {
 
     float startY;
-    float amp = 1;
+    public float amp = 1;
     float freq = 1;
 
     // Start is called before the first frame update
