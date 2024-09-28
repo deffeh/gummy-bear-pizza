@@ -68,6 +68,7 @@ public class SettingsMenu : MonoBehaviour
                 value = 0;
             }
             SensSlider.value = (float)value; 
+            Player.Instance.MouseSensitivity = (float)value * 200f;
         }
     }
 
@@ -78,6 +79,8 @@ public class SettingsMenu : MonoBehaviour
             val = 0;
         }
         SensInputField.text = val.ToString("F2");
+        Player.Instance.MouseSensitivity = val * 200f;
+
     }
 
     public float GetSensitivity() {
