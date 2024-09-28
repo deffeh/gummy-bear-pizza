@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public static Player Instance;
     public Rigidbody PlayerRigidBody;
     public Camera PlayerCamera;
+    public Transform MouthPosition;
 
     // Look
     public float MouseSensitivity;
@@ -21,12 +22,18 @@ public class Player : MonoBehaviour
     public bool CanJump;
     private Vector3 StrafeVelocity;
 
-    // Bark Cooldown
+    // Bark
+    public int BarkDamage;
+    public float BarkRange;
+    public float BarkRadius;
     public float BarkCooldown;
     private float BarkCooldownRemaining;
     private bool CanBark;
 
-    // Bite Cooldown
+    // Bite
+    public int BiteDamage;
+    public float BiteRange;
+    public float BiteRadius;
     public float BiteCooldown;
     private float BiteCooldownRemaining;
     private bool CanBite;
@@ -56,12 +63,10 @@ public class Player : MonoBehaviour
         UpdateLook();
         UpdateMovement();
         UpdateCooldown();
-
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
         if (Input.GetKeyDown(KeyCode.Mouse1))
             Bite();
-
     }
 
     // Called every frame to update player look
@@ -69,9 +74,7 @@ public class Player : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
-
         transform.Rotate(Vector3.up * mouseX);
-
         XRotation -= mouseY;
         XRotation = Mathf.Clamp(XRotation, -90, 90);
         PlayerCamera.transform.localRotation = Quaternion.Euler(XRotation, 0, 0);
@@ -82,7 +85,6 @@ public class Player : MonoBehaviour
     {
         float fallSpeed = PlayerRigidBody.velocity.y;
         Vector3 targetVelocity = Vector3.zero;
-
         if(Input.GetKey(KeyCode.W))
             targetVelocity += transform.forward;
         if(Input.GetKey(KeyCode.S))
@@ -91,13 +93,11 @@ public class Player : MonoBehaviour
             targetVelocity -= transform.right;
         if(Input.GetKey(KeyCode.D))
             targetVelocity += transform.right;
-
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
             fallSpeed = JumpSpeed;
             CanJump = false;
         }
-
         targetVelocity.Normalize();
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 
@@ -115,7 +115,6 @@ public class Player : MonoBehaviour
                 BarkCooldownRemaining = 0;
             }
         }
-
         if (!CanBite)
         {
             BiteCooldownRemaining -= Time.deltaTime;
@@ -130,7 +129,14 @@ public class Player : MonoBehaviour
     // Called to bark
     void Bark()
     {
-        // Do Bark
+        Debug.Log("Bark");
+        RaycastHit hit;
+        if (Physics.SphereCast(MouthPosition.position, BarkRadius, MouthPosition.forward, out hit, BarkRange))
+        {
+            EnemyBase enemy = hit.transform.GetComponent<EnemyBase>();
+            if (enemy)
+                enemy.TakeDamage(BarkDamage);
+        }
         CanBark = true;
         BarkCooldownRemaining = BarkCooldown;
     }
@@ -138,7 +144,14 @@ public class Player : MonoBehaviour
     // Called to bite
     void Bite()
     {
-        // Do Bite
+        Debug.Log("Bite");
+        RaycastHit hit;
+        if (Physics.SphereCast(MouthPosition.position, BiteRadius, MouthPosition.forward, out hit, BiteRange))
+        {
+            EnemyBase enemy = hit.transform.GetComponent<EnemyBase>();
+            if (enemy)
+                enemy.TakeDamage(BiteDamage);
+        }
         CanBite = true;
         BiteCooldownRemaining = BiteCooldown;
     }
