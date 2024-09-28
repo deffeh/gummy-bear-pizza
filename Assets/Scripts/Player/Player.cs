@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +8,11 @@ public class Player : MonoBehaviour
 
     public static Player Instance;
     public Rigidbody PlayerRigidBody;
+    public Camera PlayerCamera;
+
+    // Look
+    public float MouseSensitivity;
+    private float XRotation;
 
     // Movement
     public float MovementSpeed;
@@ -24,7 +30,8 @@ public class Player : MonoBehaviour
     public float BiteCooldown;
     private float BiteCooldownRemaining;
     private bool CanBite;
-
+    
+    // real shit?
     void Awake() 
     {
         if (Instance)
@@ -40,12 +47,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateLook();
         UpdateMovement();
         UpdateCooldown();
 
@@ -56,6 +64,19 @@ public class Player : MonoBehaviour
 
     }
 
+    // Called every frame to update player look
+    void UpdateLook()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        XRotation -= mouseY;
+        XRotation = Mathf.Clamp(XRotation, -90, 90);
+        PlayerCamera.transform.localRotation = Quaternion.Euler(XRotation, 0, 0);
+    }
+
     // Called every frame to update player movement
     void UpdateMovement()
     {
@@ -63,13 +84,13 @@ public class Player : MonoBehaviour
         Vector3 targetVelocity = Vector3.zero;
 
         if(Input.GetKey(KeyCode.W))
-            targetVelocity += Vector3.forward;
+            targetVelocity += transform.forward;
         if(Input.GetKey(KeyCode.S))
-            targetVelocity += Vector3.back;
+            targetVelocity -= transform.forward;
         if(Input.GetKey(KeyCode.A))
-            targetVelocity += Vector3.left;
+            targetVelocity -= transform.right;
         if(Input.GetKey(KeyCode.D))
-            targetVelocity += Vector3.right;
+            targetVelocity += transform.right;
 
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
