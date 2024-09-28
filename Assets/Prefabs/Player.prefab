@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6097216713797440971}
   - component: {fileID: 4952673476641054001}
   - component: {fileID: 7369696030669700272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 6769747036209966692}
   - component: {fileID: 6107320193236784533}
   - component: {fileID: 2027505667690699670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: JumpTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1572439566823418331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MouthPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 3738245212727055721}
   - component: {fileID: 1279549529581205039}
   - component: {fileID: 6350203670411283645}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -381,6 +381,10 @@ MonoBehaviour:
   BiteRange: 0.5
   BiteRadius: 0.5
   BiteCooldown: 0.5
+  CommandRange: 500
+  CommandLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &6350203670411283645
 Rigidbody:
   m_ObjectHideFlags: 0
