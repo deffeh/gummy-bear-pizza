@@ -206,7 +206,7 @@ RectTransform:
   - {fileID: 5422759796389353543}
   - {fileID: 8767398291694645432}
   - {fileID: 8678391547742335442}
-  m_Father: {fileID: 2995757079261909542}
+  m_Father: {fileID: 944671075043369767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2255,7 +2255,6 @@ RectTransform:
   - {fileID: 5347285557475062737}
   - {fileID: 5402324381899679208}
   - {fileID: 2780603874811316127}
-  - {fileID: 7410853347562773232}
   m_Father: {fileID: 944671075043369767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2424,6 +2423,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2995757079261909542}
+  - {fileID: 7410853347562773232}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2452,7 +2452,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &8157130771397584109
 MonoBehaviour:
@@ -2511,6 +2511,7 @@ MonoBehaviour:
   GoToTitleScreenButton: {fileID: 671635018501808561}
   Settings: {fileID: 2060872965711730230}
   isPaused: 0
+  AllowPause: 1
 --- !u!1 &8134394823572468038
 GameObject:
   m_ObjectHideFlags: 0
