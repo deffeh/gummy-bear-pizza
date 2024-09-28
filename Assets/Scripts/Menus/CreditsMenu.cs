@@ -28,7 +28,6 @@ public class CreditsMenu : MonoBehaviour
     public void Hide() {
         gameObject.SetActive(false);
         creditsCon.alpha = 0;
-        creditsCon.gameObject.SetActive(false);
     }
 
 }
