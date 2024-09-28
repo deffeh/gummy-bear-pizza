@@ -13,6 +13,7 @@ public class SettingsMenu : MonoBehaviour
     public int MaxSens = 10;
     public float FADE_ANIM_DURATION = 1f;
     public Button CloseButton;
+    public Toggle DogVisionToggle;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,6 +22,10 @@ public class SettingsMenu : MonoBehaviour
         SensInputField.onValueChanged.AddListener(UpdateSensSlider);
         CloseButton.onClick.AddListener(() => {
             Hide();
+        });
+        
+        DogVisionToggle.onValueChanged.AddListener((bool isOn) => {
+            Player.Instance?.SetDogVision(isOn);
         });
     }
 
@@ -63,6 +68,7 @@ public class SettingsMenu : MonoBehaviour
                 value = 0;
             }
             SensSlider.value = (float)value; 
+            Player.Instance.MouseSensitivity = (float)value * 200f;
         }
     }
 
@@ -73,6 +79,16 @@ public class SettingsMenu : MonoBehaviour
             val = 0;
         }
         SensInputField.text = val.ToString("F2");
+        Player.Instance.MouseSensitivity = val * 200f;
+
+    }
+
+    public float GetSensitivity() {
+        return SensSlider.value;
+    }
+
+    public bool IsDogVisionOn() {
+        return DogVisionToggle.isOn;
     }
 
 

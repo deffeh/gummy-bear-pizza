@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +13,8 @@ public class Player : MonoBehaviour
     public Rigidbody PlayerRigidBody;
     public Camera PlayerCamera;
     public Transform MouthPosition;
+    public int CurrentHealth;
+    public int MaxHealth;
 
     // Look
     public float MouseSensitivity;
@@ -38,6 +43,17 @@ public class Player : MonoBehaviour
     private float BiteCooldownRemaining;
     private bool CanBite;
     
+    // Human Interaction
+    public bool CanInteract;
+
+    // Human Command
+    public float CommandRange;
+    public LayerMask CommandLayerMask;
+    private Human Human;
+
+    public event Action OnBark;
+    public event Action OnBite;
+
     // real shit?
     void Awake() 
     {
@@ -55,6 +71,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Human = Human.Instance;
+        CanInteract = false;
+        SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
+        MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
     }
 
     // Update is called once per frame
@@ -65,8 +85,12 @@ public class Player : MonoBehaviour
         UpdateCooldown();
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
             Bite();
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+            CommandHuman();
+        if (Input.GetKeyDown(KeyCode.F) && CanInteract)
+            Interact();
     }
 
     // Called every frame to update player look
@@ -96,7 +120,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
             fallSpeed = JumpSpeed;
-            CanJump = false;
         }
         targetVelocity.Normalize();
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
@@ -130,14 +153,15 @@ public class Player : MonoBehaviour
     void Bark()
     {
         Debug.Log("Bark");
-        RaycastHit hit;
-        if (Physics.SphereCast(MouthPosition.position, BarkRadius, MouthPosition.forward, out hit, BarkRange))
+        RaycastHit[] hits = Physics.SphereCastAll(MouthPosition.position, BarkRadius, MouthPosition.forward, BarkRange);
+        foreach (RaycastHit hit in hits)
         {
             EnemyBase enemy = hit.transform.GetComponent<EnemyBase>();
             if (enemy)
                 enemy.TakeDamage(BarkDamage);
         }
-        CanBark = true;
+        OnBark?.Invoke();
+        CanBark = true; 
         BarkCooldownRemaining = BarkCooldown;
     }
 
@@ -152,7 +176,34 @@ public class Player : MonoBehaviour
             if (enemy)
                 enemy.TakeDamage(BiteDamage);
         }
+        OnBite?.Invoke();
         CanBite = true;
         BiteCooldownRemaining = BiteCooldown;
+    }
+
+    void CommandHuman()
+    {
+        Debug.Log("Command");
+        RaycastHit hit;
+        if (Physics.Raycast(PlayerCamera.transform.position, PlayerCamera.transform.forward, out hit, CommandRange, ~CommandLayerMask))
+        {
+            Human.MoveTo(hit.point);
+        }
+    }
+
+    void Interact()
+    {
+        Human.Interact();
+    }
+
+    public void AddHealth(int HealAmount)
+    {
+        CurrentHealth = Math.Min(MaxHealth, CurrentHealth + HealAmount);
+    }
+
+    public void SetDogVision(bool isOn) {
+        if (PlayerCamera.GetComponent<DogVisionPostProcess>()) {
+            PlayerCamera.GetComponent<DogVisionPostProcess>().enabled = isOn;
+        }
     }
 }
