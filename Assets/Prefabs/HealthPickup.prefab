@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1226447696158665860}
   - component: {fileID: 927588402309750482}
+  - component: {fileID: 3630700620407047175}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -54,6 +55,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3630700620407047175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410135587662733373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02440b594f67da04fbdaadc873927443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealAmount: 10
 --- !u!1 &8786867112097836195
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +79,6 @@ GameObject:
   - component: {fileID: 2209736552473581030}
   - component: {fileID: 2390258353524426172}
   - component: {fileID: 4118255453533131812}
-  - component: {fileID: 344470087379254969}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -138,24 +151,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &344470087379254969
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8786867112097836195}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

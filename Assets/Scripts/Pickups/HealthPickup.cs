@@ -7,7 +7,7 @@ public class HealthPickup : CollectableBase
     public override void Collect(Collider other)
     {
         Player player = other.GetComponent<Player>();
-        if (player != null)
+        if (!player)
         {
             player.AddHealth(HealAmount);
             Debug.Log("Player collected health pickup");
