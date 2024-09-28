@@ -153,8 +153,8 @@ public class Player : MonoBehaviour
     void Bark()
     {
         Debug.Log("Bark");
-        RaycastHit hit;
-        if (Physics.SphereCast(MouthPosition.position, BarkRadius, MouthPosition.forward, out hit, BarkRange))
+        RaycastHit[] hits = Physics.SphereCastAll(MouthPosition.position, BarkRadius, MouthPosition.forward, BarkRange);
+        foreach (RaycastHit hit in hits)
         {
             EnemyBase enemy = hit.transform.GetComponent<EnemyBase>();
             if (enemy)
