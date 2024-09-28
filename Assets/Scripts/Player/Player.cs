@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -42,10 +43,14 @@ public class Player : MonoBehaviour
     private float BiteCooldownRemaining;
     private bool CanBite;
     
+    // Human Interaction
+    public bool CanInteract;
+
     // Human Command
     public float CommandRange;
     public LayerMask CommandLayerMask;
     private Human Human;
+
     public event Action OnBark;
     public event Action OnBite;
 
@@ -67,6 +72,7 @@ public class Player : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Human = Human.Instance;
+        CanInteract = false;
     }
 
     // Update is called once per frame
@@ -81,6 +87,8 @@ public class Player : MonoBehaviour
             Bite();
         if (Input.GetKeyDown(KeyCode.Mouse2))
             CommandHuman();
+        if (Input.GetKeyDown(KeyCode.F) && CanInteract)
+            Interact();
     }
 
     // Called every frame to update player look
@@ -180,6 +188,11 @@ public class Player : MonoBehaviour
         {
             Human.MoveTo(hit.point);
         }
+    }
+
+    void Interact()
+    {
+        Human.Interact();
     }
 
     public void AddHealth(int HealAmount)
