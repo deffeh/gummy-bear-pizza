@@ -8,13 +8,13 @@ public abstract class EnemyBase : MonoBehaviour
     public int MaxHp;
     public int CurHp;
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         CurHp = MaxHp;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         
     }
