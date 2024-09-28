@@ -3,9 +3,9 @@ Shader "Hidden/SpriteDefault"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _F("Hue", float) = 0
-        _B("Brightness", float) = 1
-        _C("Contrast", float) = 1
+        _Hue("Hue", float) = 0
+        _Brightness("Brightness", float) = 1
+        _Contrast("Contrast", float) = 1
     }
     SubShader
     {
@@ -49,9 +49,9 @@ Shader "Hidden/SpriteDefault"
             }
 
             sampler2D _MainTex;
-            float _F;
-            float _B;
-            float _C;
+            float _Hue;
+            float _Brightness;
+            float _Contrast;
 
             //credit https://gist.github.com/mairod/a75e7b44f68110e1576d77419d608786
             float3 hueShift( float3 color, float hueAdjust ){
@@ -84,10 +84,10 @@ Shader "Hidden/SpriteDefault"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                col.rgb *= _B;
-                col.rgb = pow(col.rgb, _C);
+                col.rgb *= _Brightness;
+                col.rgb = pow(col.rgb, _Contrast);
                 // just invert the colors
-                col.rgb = clamp(hueShift( col.rgb, _F),0.,1.);
+                col.rgb = clamp(hueShift( col.rgb, _Hue),0.,1.);
                 col *= i.color;
                 return col;
             }
