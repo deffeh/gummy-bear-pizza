@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
     private float BiteCooldownRemaining;
     private bool CanBite;
     
+    // Human Command
+    public float CommandRange;
+    public LayerMask CommandLayerMask;
+    private Human Human;
+
     // real shit?
     void Awake() 
     {
@@ -55,6 +60,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Human = Human.Instance;
     }
 
     // Update is called once per frame
@@ -65,8 +71,10 @@ public class Player : MonoBehaviour
         UpdateCooldown();
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
             Bite();
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+            CommandHuman();
     }
 
     // Called every frame to update player look
@@ -154,5 +162,15 @@ public class Player : MonoBehaviour
         }
         CanBite = true;
         BiteCooldownRemaining = BiteCooldown;
+    }
+
+    void CommandHuman()
+    {
+        Debug.Log("Command");
+        RaycastHit hit;
+        if (Physics.Raycast(PlayerCamera.transform.position, PlayerCamera.transform.forward, out hit, CommandRange, ~CommandLayerMask))
+        {
+            Human.MoveTo(hit.point);
+        }
     }
 }

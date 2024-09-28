@@ -35,7 +35,7 @@ public class Human : MonoBehaviour
         
     }
 
-    void MoveTo(Vector3 target)
+    public void MoveTo(Vector3 target)
     {
         HumanRigidBody.rotation.SetLookRotation(target);
         HumanNavMeshAgent.SetDestination(target);
