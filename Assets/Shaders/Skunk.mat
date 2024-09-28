@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PixelExplosion
-  m_Shader: {fileID: 4800000, guid: 2a37274e2aae0984f89157718bc58b8d, type: 3}
+  m_Name: Skunk
+  m_Shader: {fileID: 4800000, guid: b6c07a8de216f844ea15f73cedadb01f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -77,7 +77,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Resolution: 20
+    - _Resolution: 21.7
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

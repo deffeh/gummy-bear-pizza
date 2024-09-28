@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PixelExplosion
-  m_Shader: {fileID: 4800000, guid: 2a37274e2aae0984f89157718bc58b8d, type: 3}
+  m_Name: DogVision
+  m_Shader: {fileID: 4800000, guid: 52798cb8c72df594ea85055ec6a558f3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
