@@ -59,7 +59,10 @@ public abstract class EnemyBase : MonoBehaviour
     public void Die()
     {
         if (DeathEffect)
+        {
             Instantiate(DeathEffect, transform.position, quaternion.identity, null);
+            CameraShake.Shake(1);
+        }
         Destroy(gameObject);
     }
 }
