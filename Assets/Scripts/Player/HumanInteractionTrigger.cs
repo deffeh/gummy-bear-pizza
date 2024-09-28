@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class JumpTrigger : MonoBehaviour
+public class HumanInteractionTrigger : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -19,13 +18,13 @@ public class JumpTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
-            Player.Instance.CanJump = true;
+        if (other.CompareTag("Player"))
+            Player.Instance.CanInteract = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player"))
-            Player.Instance.CanJump = false;
+        if (other.CompareTag("Player"))
+            Player.Instance.CanInteract = false;
     }
 }
