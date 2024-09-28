@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     public float CommandRange;
     public LayerMask CommandLayerMask;
     private Human Human;
+    public event Action OnBark;
+    public event Action OnBite;
 
     // real shit?
     void Awake() 
@@ -149,7 +151,8 @@ public class Player : MonoBehaviour
             if (enemy)
                 enemy.TakeDamage(BarkDamage);
         }
-        CanBark = true;
+        OnBark?.Invoke();
+        CanBark = true; 
         BarkCooldownRemaining = BarkCooldown;
     }
 
@@ -164,6 +167,7 @@ public class Player : MonoBehaviour
             if (enemy)
                 enemy.TakeDamage(BiteDamage);
         }
+        OnBite?.Invoke();
         CanBite = true;
         BiteCooldownRemaining = BiteCooldown;
     }
