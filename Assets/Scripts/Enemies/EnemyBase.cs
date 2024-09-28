@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour
@@ -9,6 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
     public int CurHp;
 
     public SpriteRenderer Sprite;
+    public GameObject DeathEffect;
 
     private Material mat;
     // Start is called before the first frame update
@@ -56,6 +58,8 @@ public abstract class EnemyBase : MonoBehaviour
     
     public void Die()
     {
+        if (DeathEffect)
+            Instantiate(DeathEffect, transform.position, quaternion.identity, null);
         Destroy(gameObject);
     }
 }
