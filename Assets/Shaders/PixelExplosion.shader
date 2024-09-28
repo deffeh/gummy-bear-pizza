@@ -57,8 +57,13 @@ Shader "Unlit/PixelExplosion"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 baseUV = i.uv;
-                i.uv -= .5f;
+                float2 baseUV =( i.uv - .5) * .5;
+                baseUV += floor((float2(cos(i.color.a * 5), sin(i.color.a * 5)) * (1 - i.color.a)) * _Resolution)/_Resolution;
+                baseUV *= _Resolution * 2;
+                baseUV = floor(baseUV);
+                baseUV /= _Resolution * 2;
+                
+                i.uv -= .5;
                 i.uv *= 2;
                 i.uv *= _Resolution;
                 i.uv = floor(i.uv);
@@ -68,14 +73,17 @@ Shader "Unlit/PixelExplosion"
 
                 fixed4 col = 1.;
 
-                baseUV += float2(cos(i.color.a), sin(i.color.a) * (1 - i.color.a));
                 
                 f = 1 - f;
                 // sample the texture
                 col.rgb *= i.color.rgb;
                 col.a *= f;
-
-                col.a = dot(baseUV, baseUV);
+                float f2 = smoothstep(0,1.,dot(baseUV, baseUV));
+                col.a *= f2;
+                // col.a *= smoothstep(0., .1, i.color.a);
+                col.a *= 10;
+                col.a = floor(col.a);
+                col.a /= 10;
                 return clamp(col, 0., 1.);
             }
             ENDCG
