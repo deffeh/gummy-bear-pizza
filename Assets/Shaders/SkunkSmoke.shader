@@ -73,7 +73,7 @@ Shader "Unlit/PixelParticle"
                 i.uv *= _Resolution;
                 i.uv = floor(i.uv);
                 float2 uvDir = normalize(i.uv);
-                i.uv += fbm((i.uv + uvDir)/6 + _Time[1] * .7) * uvDir * 10;
+                i.uv += fbm((i.uv + uvDir)/6 + _Time[1] * .7) * uvDir * 15;
                 i.uv/= _Resolution;
                 float f = smoothstep(0.5,1., dot(i.uv, i.uv));
                 //
