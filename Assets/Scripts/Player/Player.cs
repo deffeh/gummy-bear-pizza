@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ public class Player : MonoBehaviour
     public Rigidbody PlayerRigidBody;
     public Camera PlayerCamera;
     public Transform MouthPosition;
+    public int CurrentHealth;
+    public int MaxHealth;
 
     // Look
     public float MouseSensitivity;
@@ -172,5 +176,10 @@ public class Player : MonoBehaviour
         {
             Human.MoveTo(hit.point);
         }
+    }
+
+    public void AddHealth(int HealAmount)
+    {
+        CurrentHealth = Math.Min(MaxHealth, CurrentHealth + HealAmount);
     }
 }
