@@ -323,6 +323,8 @@ MonoBehaviour:
   AccelerationSpeed: 5
   JumpSpeed: 5
   CanJump: 1
+  DashSpeed: 25
+  DashCoolDown: 2
   BarkDamage: 10
   BarkRange: 2
   BarkRadius: 2
@@ -331,6 +333,7 @@ MonoBehaviour:
   BiteRange: 0.5
   BiteRadius: 0.5
   BiteCooldown: 0.5
+  CanInteract: 0
   CommandRange: 500
   CommandLayerMask:
     serializedVersion: 2
