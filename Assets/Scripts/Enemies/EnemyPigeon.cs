@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyPigeon : EnemyBase
 {
     public PigeonState CurState;
-    public AnimationCurve FlightSpeed;
+    public AnimationCurve FlightCurve;
+    public float FlightStrength = 100;
+    public float FlightRate = .6f;
+    public float FireRate = 2f;
+    public GameObject PigeonProjectile;
     private Rigidbody rb;
     
     // Start is called before the first frame update
@@ -15,20 +20,16 @@ public class EnemyPigeon : EnemyBase
         base.Start();
         CurState = PigeonState.Idle;
         rb = GetComponent<Rigidbody>();
-    }
-
-    private void OnDrawGizmos()
-    {
-        
+        StartCoroutine(FireProjectile());
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        float t = (Time.time * .5f) % 1f;
+        float t = (Time.time * FlightRate) % 1f;
         print(t);
-        rb.AddForce(Vector3.up * FlightSpeed.Evaluate(t));
+        rb.AddForce(Vector3.up * FlightCurve.Evaluate(t) * FlightStrength * Time.deltaTime * rb.mass);
         switch (CurState)
         {
             case PigeonState.Attack:
@@ -39,6 +40,21 @@ public class EnemyPigeon : EnemyBase
         }
     }
 
+    private IEnumerator FireProjectile()
+    {
+        float t = 0;
+        while (true)
+        {
+            t += Time.deltaTime;
+            if (t >= FireRate)
+            {
+                t = 0;
+                Instantiate(PigeonProjectile, transform.position, quaternion.identity, null);
+            }
+            yield return null;
+        }
+    }
+    
     private void Attack()
     {
         
