@@ -44,6 +44,16 @@ public class SettingsMenu : MonoBehaviour
         seq.Play();
     }
 
+    public void InstantHide() {
+        var canvasGrp = GetComponent<CanvasGroup>();
+        var seq = DOTween.Sequence();
+        seq.SetUpdate(true);
+        seq.Append(canvasGrp.DOFade(0, 0));
+        seq.Join(transform.DOScale(0, 0));
+        seq.AppendCallback(() => gameObject.SetActive(false));
+        seq.Play();
+    }
+
     private void UpdateSensSlider(string val) {
         
         if (decimal.TryParse(val, out decimal value)) {

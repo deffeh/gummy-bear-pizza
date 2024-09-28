@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu Instance;
-
+    public GameObject PauseContainer;
     public Button SettingsButton;
     public Button GoToTitleScreenButton;
     public SettingsMenu Settings;
-    private bool isPaused = false;
+    public bool isPaused = false;
 
     void Awake() 
     {
@@ -36,14 +36,11 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
-            if (isPaused) {
-                SettingsButton.gameObject.SetActive(false);
-                GoToTitleScreenButton.gameObject.SetActive(false);
-            } else {
-                SettingsButton.gameObject.SetActive(true);
-                GoToTitleScreenButton.gameObject.SetActive(true);
-            }
             isPaused = !isPaused;
+            PauseContainer.SetActive(isPaused);
+            if (!isPaused) {
+                Settings.InstantHide();
+            }
         }
     }
 
