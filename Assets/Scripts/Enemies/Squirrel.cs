@@ -24,6 +24,7 @@ public class Squirrel : EnemyBase
     public float projectileSpawnDistFromPlayer = 0.5f;
     public float AttackCooldown = 2f;
     public float MaxAttackRange = 15f;
+    public float AggressionRange = 20f;
     public LayerMask layerMask;
     private bool HasLineOfSight = false;
     private float CurCooldown = 0f;
@@ -37,8 +38,9 @@ public class Squirrel : EnemyBase
         player = Player.Instance.GetComponent<Rigidbody>();
         NavAgent.speed = Speed;
         NavAgent.stoppingDistance = MaxAttackRange;
-
-        SetToSearching();
+        
+        UpdateState(SquirrelState.Idle);
+        // SetToSearching();
     }
 
     void FixedUpdate()
@@ -49,6 +51,7 @@ public class Squirrel : EnemyBase
         switch (curState) 
         {
             case SquirrelState.Idle:
+            IdleState();
             break;
 
             case SquirrelState.Searching:
@@ -93,6 +96,17 @@ public class Squirrel : EnemyBase
     void UpdateState(SquirrelState newState)
     {
         curState = newState;
+    }
+
+    void IdleState() {
+        NavAgent.isStopped = true;
+        float distToPlayer = (player.position - transform.position).magnitude;
+        
+        if (distToPlayer < AggressionRange && HasLineOfSight)
+        {
+            NavAgent.isStopped = false;
+            UpdateState(SquirrelState.Searching);
+        }
     }
 
     public void SetToSearching()
