@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
     
     public event Action OnBark;
     public event Action OnBite;
+    public event Action<int> OnHealed;
+    public event Action<int> OnTakeDamage;
+
 
     // real shit?
     void Awake() 
@@ -81,6 +84,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        CurrentHealth = MaxHealth;
         Human = Human.Instance;
         CanInteract = false;
         if (PauseMenu.Instance) {
@@ -140,8 +144,8 @@ public class Player : MonoBehaviour
     // Called every frame to update player look
     void UpdateLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity / 150f;
+        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity / 150f;
         transform.Rotate(Vector3.up * mouseX);
         XRotation -= mouseY;
         XRotation = Mathf.Clamp(XRotation, -90, 90);
@@ -232,6 +236,17 @@ public class Player : MonoBehaviour
         BiteCooldownRemaining = BiteCooldown;
     }
 
+    public void OnHit(int damage) {
+        CurrentHealth = Math.Max(0, CurrentHealth - damage);
+        if (CurrentHealth == 0) {
+            //unborn yourself
+        } else {
+
+        }
+        OnTakeDamage?.Invoke(CurrentHealth);
+
+    }
+
     void CommandHuman()
     {
         Debug.Log("Command");
@@ -250,6 +265,7 @@ public class Player : MonoBehaviour
     public void AddHealth(int HealAmount)
     {
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + HealAmount);
+        OnHealed?.Invoke(CurrentHealth);
     }
 
     public void SetDogVision(bool isOn) {
