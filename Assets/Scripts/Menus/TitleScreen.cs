@@ -15,7 +15,10 @@ public class TitleScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PauseMenu.Instance.AllowPause = false;
+        if (PauseMenu.Instance) {
+            PauseMenu.Instance.AllowPause = false;
+            PauseMenu.Instance.amDying = true;
+        }
 
         PlayButton.onClick.AddListener(PlayGame);
         SettingsButton.onClick.AddListener(() => {
