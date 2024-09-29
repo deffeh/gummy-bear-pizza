@@ -1434,6 +1434,7 @@ GameObject:
   - component: {fileID: 577941530}
   - component: {fileID: 577941533}
   - component: {fileID: 577941534}
+  - component: {fileID: 577941535}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -1652,6 +1653,49 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &577941535
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577941528}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!1 &598213330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 598213331}
+  m_Layer: 5
+  m_Name: TitleStartPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &598213331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598213330}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 857, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1481025819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &630399020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1780,6 +1824,7 @@ GameObject:
   - component: {fileID: 674474548}
   - component: {fileID: 674474551}
   - component: {fileID: 674474552}
+  - component: {fileID: 674474553}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1998,6 +2043,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &674474553
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674474546}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &733258463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,6 +2565,7 @@ GameObject:
   - component: {fileID: 867957440}
   - component: {fileID: 867957442}
   - component: {fileID: 867957441}
+  - component: {fileID: 867957443}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -2529,11 +2587,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1481025819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1200, y: 300}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &867957441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2631,6 +2689,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867957439}
   m_CullTransparentMesh: 1
+--- !u!225 &867957443
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867957439}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1087711224
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,6 +3074,7 @@ GameObject:
   - component: {fileID: 1238258549}
   - component: {fileID: 1238258552}
   - component: {fileID: 1238258553}
+  - component: {fileID: 1238258554}
   m_Layer: 5
   m_Name: CreditsButton
   m_TagString: Untagged
@@ -3222,6 +3293,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &1238258554
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238258547}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1290481359
 GameObject:
   m_ObjectHideFlags: 0
@@ -3803,6 +3886,7 @@ GameObject:
   - component: {fileID: 1463703655}
   - component: {fileID: 1463703658}
   - component: {fileID: 1463703659}
+  - component: {fileID: 1463703660}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -4021,6 +4105,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &1463703660
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463703653}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1481025818
 GameObject:
   m_ObjectHideFlags: 0
@@ -4053,6 +4149,8 @@ RectTransform:
   m_Children:
   - {fileID: 1736618303}
   - {fileID: 867957440}
+  - {fileID: 598213331}
+  - {fileID: 1627402008}
   - {fileID: 577941529}
   - {fileID: 1463703654}
   - {fileID: 1238258548}
@@ -4237,6 +4335,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545310015}
   m_CullTransparentMesh: 1
+--- !u!1 &1627402007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1627402008}
+  m_Layer: 5
+  m_Name: ButtonStartPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1627402008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627402007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -880, y: 48, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1481025819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1671669828
 GameObject:
   m_ObjectHideFlags: 0
@@ -4490,6 +4619,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3605daed898441c49ad31dbd314bd23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Title: {fileID: 867957439}
+  TitleAnimStartPos: {fileID: 598213331}
+  ButtonAnimStartPos: {fileID: 1627402008}
   PlayButton: {fileID: 577941530}
   SettingsButton: {fileID: 1463703655}
   CreditsButton: {fileID: 1238258549}
