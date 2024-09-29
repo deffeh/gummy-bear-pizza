@@ -119,6 +119,7 @@ public class Skunk : EnemyBase
     }
 
     private void FartCharge() {
+        animator.Play("SkunkBlast");
         NavAgent.destination = rb.position;
         seqLerpVal = 1f;
         var seq = DOTween.Sequence();
@@ -134,7 +135,7 @@ public class Skunk : EnemyBase
     }
 
     private void FartRecoveryState() {
-        animator.Play("SkunkIdle");
+        animator.Play("SkunkBlast");
         var seq = DOTween.Sequence();
         seq.AppendInterval(FartRecoveryDuration);
         seq.AppendCallback(() => {
