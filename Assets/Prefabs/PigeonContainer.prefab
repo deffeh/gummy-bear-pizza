@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd8a4ef19b3c8e449adfb3d35a41433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentObject: {fileID: 0}
 --- !u!95 &2161221579995329303
 Animator:
   serializedVersion: 5
@@ -132,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4208140caaa74b4c9b746b17a1ab929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectToFollow: {fileID: 0}
+  ObjectToFollow: {fileID: 4768206721111953126}
 --- !u!1 &4768206721111953126
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2a4dc5caf7a114a94082484df5c36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 100
+  MaxHp: 1
   CurHp: 0
   Sprite: {fileID: 4227137384412801872}
   DeathEffect: {fileID: 8521852251528875114, guid: e0e30ed89133ab749872df63229debcb, type: 3}
