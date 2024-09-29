@@ -9,10 +9,11 @@ public class AcornProjectile : MonoBehaviour
     public Vector3 direction;
     public SphereCollider triggerVolume;
     public GameObject AcornEffectPrefab;
+    public int Damage;
     public float lifeSpan = 5f;
     private Rigidbody rb;
 
-    public void Init(float initSpeed, Vector3 initDirection)
+    public void Init(float initSpeed, Vector3 initDirection, int Damage)
     {
         speed = initSpeed;
         direction = initDirection.normalized;
@@ -51,13 +52,13 @@ public class AcornProjectile : MonoBehaviour
         Player player = other.GetComponent<Player>();
         if (player)
         {
-            player.OnHit(5);
+            player.OnHit(Damage);
         }
 
         Human human = other.GetComponent<Human>();
         if (human)
         {
-            human.OnHit(5);
+            human.OnHit(Damage);
         }
 
         Squirrel self = other.GetComponent<Squirrel>();

@@ -17,6 +17,7 @@ public abstract class EnemyBase : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
+        
         CurHp = MaxHp;
         if (!Sprite)
         {
