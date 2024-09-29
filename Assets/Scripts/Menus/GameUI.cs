@@ -17,19 +17,29 @@ public class GameUI : MonoBehaviour
     {
         Player play = Player.Instance;
         Human hum = Human.Instance;
-        play.OnHealed += DogHealed;
-        play.OnTakeDamage += DogDamaged;
-        hum.OnHealed += HumanHealed;
-        hum.OnTakeDamage += HumanDamaged;
+        if (play) {
+            play.OnHealed += DogHealed;
+            play.OnTakeDamage += DogDamaged;
+            DogHealthText.text = play.CurrentHealth.ToString();
+        }
+        if (hum) {
+            hum.OnHealed += HumanHealed;
+            hum.OnTakeDamage += HumanDamaged;
+            HumanHealthText.text = hum.CurrentHealth.ToString();
+        }
     }
 
     void OnDestroy() {
         Player play = Player.Instance;
         Human hum = Human.Instance;
-        play.OnHealed -= DogHealed;
-        play.OnTakeDamage -= DogDamaged;
-        hum.OnHealed -= HumanHealed;
-        hum.OnTakeDamage -= HumanDamaged;
+        if (play) {
+            play.OnHealed -= DogHealed;
+            play.OnTakeDamage -= DogDamaged;
+        }
+        if (hum) {
+            hum.OnHealed -= HumanHealed;
+            hum.OnTakeDamage -= HumanDamaged;
+        }
     }
 
     private void DogHealed(int hp) {

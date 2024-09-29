@@ -84,6 +84,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        CurrentHealth = MaxHealth;
         Human = Human.Instance;
         CanInteract = false;
         if (PauseMenu.Instance) {
@@ -240,8 +241,10 @@ public class Player : MonoBehaviour
         if (CurrentHealth == 0) {
             //unborn yourself
         } else {
-            OnTakeDamage?.Invoke(CurrentHealth);
+
         }
+        OnTakeDamage?.Invoke(CurrentHealth);
+
     }
 
     void CommandHuman()

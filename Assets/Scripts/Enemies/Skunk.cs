@@ -138,8 +138,8 @@ public class Skunk : EnemyBase
     }
 
     private void SprayGas() {
-        var startPos = transform.position + (Vector3.up * 1f);
-        var colls = Physics.OverlapSphere(startPos, FartRadius, ~mask);
+        var startPos = transform.position + (Vector3.up * 0.5f);
+        var colls = Physics.OverlapSphere(startPos, FartRadius, mask);
         foreach (var col in colls) {
             if (col.GetComponent<Player>()) {
                 col.GetComponent<Player>().OnHit(Damage);
