@@ -60,10 +60,11 @@ MonoBehaviour:
   NavAgent: {fileID: 2158375174782871251}
   player: {fileID: 0}
   rb: {fileID: 1925338825689528150}
+  Damage: 5
   Speed: 3
   projectileSpeed: 8
   projectileSpawnDistFromPlayer: 0.5
-  AttackCooldown: 2
+  AttackCooldownLength: 2
   MaxAttackRange: 15
   AggressionRange: 20
   layerMask:
@@ -116,7 +117,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.07375
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!135 &4543131045055576328
