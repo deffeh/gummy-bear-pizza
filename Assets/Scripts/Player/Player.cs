@@ -23,7 +23,8 @@ public class Player : MonoBehaviour
     public int MaxHealth;
     public Transform Model;
     public PlayerState CurrentState;
-
+    public ParticleSystem SpeedLines;
+    
     // Look
     public float MouseSensitivity;
     private float XRotation;
@@ -164,6 +165,12 @@ public class Player : MonoBehaviour
             CanDash = false;
             isDashing = true;
             DashSrc.Play();
+
+            if (SpeedLines)
+            {
+                SpeedLines.transform.rotation = Quaternion.LookRotation( Quaternion.AngleAxis(90, Vector3.up) * targetVelocity.normalized) ;
+                SpeedLines.Play();
+            }
         }
         if (Vector2.Distance(targetVelocity, Vector2.zero) < 0.001) {
             if (walkSrc.isPlaying) {
