@@ -6,6 +6,7 @@ public class PigeonExplosion : MonoBehaviour
 {
     // Start is called before the first frame update
     public float KnockbackForce = 100;
+    public int Damage = 10;
     void Start()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, transform.lossyScale.x/2);
@@ -19,6 +20,10 @@ public class PigeonExplosion : MonoBehaviour
                 {
                     hitObjects.Add(hit.gameObject);
                     otherRb.AddForce((otherRb.position - transform.position).normalized * KnockbackForce);
+                    if (hit.GetComponent<Player>())
+                    {
+                        hit.GetComponent<Player>().OnHit(Damage);
+                    }
                 }
             }
         }
