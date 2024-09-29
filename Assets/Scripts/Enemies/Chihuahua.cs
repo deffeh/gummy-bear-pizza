@@ -27,13 +27,14 @@ public class Chihuahua : EnemyBase
     public int Damage = 10;
     [Header("State Stuff")]
     public ChihuahuaState curState;
-    public float PlayerTriggerDist = 1f;
+    public float PlayerTriggerDist = 10f;
     public float BiteTriggerDist = 1f;
     public float BiteRecoveryDuration = 0.5f;
     public float BiteDist = 5f;
     public float BiteRadius = 5f;
     public LayerMask mask;
     public AudioSource barksrc;
+    public Animator animator;
     
 
     // Start is called before the first frame update
@@ -54,6 +55,7 @@ public class Chihuahua : EnemyBase
         human = Human.Instance.GetComponent<Rigidbody>();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         NavAgent.speed = Speed;
         curState = ChihuahuaState.Idle;
         SetToActive();
@@ -62,6 +64,7 @@ public class Chihuahua : EnemyBase
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log("Current State: " + curState);
         switch (curState) {
             case ChihuahuaState.Idle:
             SearchForPlayer();
@@ -80,8 +83,10 @@ public class Chihuahua : EnemyBase
     }
 
      private void SearchForPlayer() {
-        float distToPlayer = Vector3.Distance(rb.position, player.position);
-        float distToHuman = Vector3.Distance(rb.position, human.position);
+        animator.Play("ChihuahuaIdle");
+        float distToPlayer = Vector3.Distance(transform.position, player.position);
+        float distToHuman = Vector3.Distance(transform.position, human.position);
+        
         if (distToPlayer < PlayerTriggerDist || distToHuman < PlayerTriggerDist) {
             SetToActive();
         }
@@ -92,6 +97,7 @@ public class Chihuahua : EnemyBase
     }
 
       private void ActiveState() {
+        animator.Play("ChihuahuaRun");
         float distToPlayer = Vector3.Distance(rb.position, player.position);
         float distToHuman = Vector3.Distance(rb.position, human.position);
         float dist = Math.Min(distToPlayer, distToHuman);
@@ -108,6 +114,7 @@ public class Chihuahua : EnemyBase
     }
 
     private void BitingRecoveryState() {
+        animator.Play("ChihuahuaIdle");
         var seq = DOTween.Sequence();
         seq.AppendInterval(BiteRecoveryDuration);
         seq.OnComplete(() => {
@@ -131,6 +138,7 @@ public class Chihuahua : EnemyBase
     }
 
     private void BiteThings() {
+        animator.Play("ChihuahuaIdle");
         barksrc.Play();
         var startPos = transform.position + transform.forward * BiteDist;
         var colls = Physics.OverlapSphere(startPos, BiteRadius, mask);

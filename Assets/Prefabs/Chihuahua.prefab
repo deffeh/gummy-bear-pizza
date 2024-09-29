@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 2083310691977453196}
   - component: {fileID: 4877385141578925142}
   - component: {fileID: 1127346367868804076}
+  - component: {fileID: 1746133957230740705}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -226,6 +227,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentObject: {fileID: 0}
+--- !u!95 &1746133957230740705
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3550346116425618185}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 746ed5431a1096b4d8f69a8d983141d4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6332573774936872531
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,11 +375,13 @@ MonoBehaviour:
   DamageTakenSFX: {fileID: 7576733402606945416}
   CurrentRoot: {fileID: 0}
   player: {fileID: 0}
+  human: {fileID: 0}
   NavAgent: {fileID: -1108002570674703561}
   rb: {fileID: -8920014797802264547}
   Speed: 7
   Damage: 10
   curState: 0
+  PlayerTriggerDist: 10
   BiteTriggerDist: 3
   BiteRecoveryDuration: 1
   BiteDist: 2
@@ -366,6 +390,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   barksrc: {fileID: 8053944329898762196}
+  animator: {fileID: 1746133957230740705}
 --- !u!82 &7576733402606945416
 AudioSource:
   m_ObjectHideFlags: 0
