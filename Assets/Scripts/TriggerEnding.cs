@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TriggerEnding : MonoBehaviour
 {
-    public IntroSequence intro;
-
     private bool entered = false;
     void OnTriggerEnter(Collider other) {
         if (entered) {
             return;
         }
-        entered = true;
-        intro.EndSequence();
+        if (other.GetComponent<Player>()) {
+            entered = true;
+            LoadingScreen.Instance.LoadNewScene("EndingScene");
+        }
     }
 }

@@ -19,9 +19,8 @@ public class FacePlayer : MonoBehaviour
         {
             UpVector = ParentObject.up;
         }
-        if (transform) {
-            transform.rotation =
-                Quaternion.LookRotation((Camera.main.transform.position - transform.position).normalized, UpVector);
+        if (Camera.main) { 
+            transform.rotation = Quaternion.LookRotation((Camera.main.transform.position - transform.position).normalized, UpVector);
         }
     }
 }

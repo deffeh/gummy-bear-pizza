@@ -25,6 +25,7 @@ public class GameUI : MonoBehaviour
             play.OnReload += OnDogReload;
             play.OnAmmoChanged += OnAmmoChanged;
             DogHealthText.text = play.CurrentHealth.ToString();
+            DogAmmoText.text = play.BarkAmmo.ToString();
         }
         if (hum) {
             hum.OnHealed += HumanHealed;
