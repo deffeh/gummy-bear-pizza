@@ -25231,6 +25231,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3186574503532325014, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
+      propertyPath: DashCoolDown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186574503532325014, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
+      propertyPath: MinAccelerationSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4055436693959017520, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.09
