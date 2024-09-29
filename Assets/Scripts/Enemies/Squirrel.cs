@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Security.Cryptography;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -23,12 +24,13 @@ public class Squirrel : EnemyBase
     public float Speed = 5f;
     public float projectileSpeed = 8f;
     public float projectileSpawnDistFromPlayer = 0.5f;
-    public float AttackCooldown = 2f;
+    public float AttackCooldownLength = 2f;
     public float MaxAttackRange = 15f;
     public float AggressionRange = 20f;
     public LayerMask layerMask;
+    private float attackDelayLength;
     private bool HasLineOfSight = false;
-    private float CurCooldown = 0f;
+    private bool CanAttack = true;
     private Animator animator;
     public AudioSource audiosrc;
 
@@ -50,6 +52,7 @@ public class Squirrel : EnemyBase
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         player = Player.Instance.GetComponent<Rigidbody>();
+        attackDelayLength = UnityEngine.Random.Range(0, 4) * 0.5f;
         NavAgent.speed = Speed;
         NavAgent.stoppingDistance = MaxAttackRange;
         
@@ -58,7 +61,6 @@ public class Squirrel : EnemyBase
 
     void FixedUpdate()
     {
-        CurCooldown = Math.Max(0f, CurCooldown - Time.deltaTime);
         Debug.Log("Current State: " + curState.ToString());
 
         switch (curState) 
@@ -123,11 +125,6 @@ public class Squirrel : EnemyBase
         }
     }
 
-    public void SetToSearching()
-    {
-        UpdateState(SquirrelState.Searching);
-    }
-
     private void SearchingState()
     {
         animator.Play("Squirrel_Run");
@@ -142,27 +139,41 @@ public class Squirrel : EnemyBase
         }
         else
         {
-            UpdateState(SquirrelState.Attacking);
+            StartCoroutine(RandomDelayedSwitchToAttacking());
         }
+    }
+
+    IEnumerator RandomDelayedSwitchToAttacking()
+    {
+        yield return new WaitForSeconds(attackDelayLength);
+        UpdateState(SquirrelState.Attacking);
     }
 
     private void AttackingState()
     {
         animator.Play("Squirrel_Idle");
         float targetDist = Vector3.Distance(rb.position, player.position);
+
         if (targetDist <= MaxAttackRange && HasLineOfSight)
         {
             NavAgent.stoppingDistance = MaxAttackRange;
-            if (CurCooldown <= 0 && projectilePrefab)
+            if (CanAttack && projectilePrefab)
             {
                 ThrowAcorn();
-                CurCooldown = AttackCooldown;
+                StartCoroutine(StartCooldown());
             }
         }
         else
         {
             UpdateState(SquirrelState.Searching);
         }
+    }
+
+    IEnumerator StartCooldown()
+    {
+        CanAttack = false;
+        yield return new WaitForSeconds(AttackCooldownLength);
+        CanAttack = true;
     }
 
     private void ThrowAcorn()
