@@ -755,6 +755,7 @@ GameObject:
   - component: {fileID: 4674055546129877037}
   - component: {fileID: 8514143379325763048}
   - component: {fileID: 550388977430030946}
+  - component: {fileID: 3280434130917354416}
   m_Layer: 5
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -846,6 +847,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3280434130917354416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3450763455723676221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f1902ddb8d5cd4ab3059cb5b76e7d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DogHealthText: {fileID: 6719733048334913462}
+  HumanHealthText: {fileID: 4042484917744682455}
+  NumTreatsText: {fileID: 5966343610289378415}
+  NumSandwichesText: {fileID: 663853669800292592}
+  DogPic: {fileID: 8003908830601921298}
+  HumanPic: {fileID: 740388347035390920}
 --- !u!1 &3509034379287288449
 GameObject:
   m_ObjectHideFlags: 0
