@@ -9,7 +9,8 @@ public class HumanHealthCollectable : CollectableBase
         Human human = other.GetComponent<Human>();
         if (human)
         {
-            // human.AddHealth(HealAmount);
+            if (human.CurrentHealth >= human.MaxHealth) return;
+            human.OnHeal(HealAmount);
             Debug.Log("Human collected health pickup");
             Destroy(gameObject);
         }
