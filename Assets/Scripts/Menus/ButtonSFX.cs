@@ -13,6 +13,7 @@ public class ButtonSFX : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         Audio.clip = HoverClip;
+        Audio.volume = 0.5f;
         Audio.Play();
     }
 
@@ -23,6 +24,7 @@ public class ButtonSFX : MonoBehaviour, IPointerEnterHandler
         if (OnClickClip != null) {
             GetComponent<Button>().onClick.AddListener(() => {
                 Audio.clip = OnClickClip;
+                Audio.volume = 1f;
                 Audio.Play();
             });
         }

@@ -976,7 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cce03b62ef052845a59e763820a2d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 0
+  difficulty: 1
   SelectorRing: {fileID: 757605594}
 --- !u!82 &1332980263
 AudioSource:
