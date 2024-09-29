@@ -62,6 +62,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _B: 1
+    - _Brightness: 1
     - _BumpScale: 1
     - _C: 1
     - _Color1Cutoff: 0.38
@@ -69,6 +70,7 @@ Material:
     - _Color2Cutoff: 0.77
     - _Color2Range: 0.17
     - _ColorResolution: 10
+    - _Contrast: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -76,6 +78,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Hue: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1

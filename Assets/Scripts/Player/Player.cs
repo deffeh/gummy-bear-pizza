@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Transform MouthPosition;
     public int CurrentHealth;
     public int MaxHealth;
+    public Transform Model;
 
     // Look
     public float MouseSensitivity;
@@ -55,6 +56,11 @@ public class Player : MonoBehaviour
     public LayerMask CommandLayerMask;
     private Human Human;
 
+    private Vector3 targetVelocity;
+    private float fallSpeed;
+    private bool isJumping = false;
+    private bool isDashing = false;
+    
     public event Action OnBark;
     public event Action OnBite;
 
@@ -77,16 +83,23 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Human = Human.Instance;
         CanInteract = false;
-        SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
-        MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
+        if (PauseMenu.Instance) {
+            SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
+            MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateMovement();
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateLook();
-        UpdateMovement();
         UpdateCooldown();
+        MovementControls();
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
         if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
@@ -95,8 +108,35 @@ public class Player : MonoBehaviour
             CommandHuman();
         if (Input.GetKeyDown(KeyCode.F) && CanInteract)
             Interact();
+        Model.position = Vector3.Lerp(Model.position, transform.position, 30 * Time.deltaTime);
+        Model.rotation = transform.rotation;
     }
 
+    void MovementControls()
+    {
+        fallSpeed = PlayerRigidBody.velocity.y;
+        targetVelocity = Vector3.zero;
+        if(Input.GetKey(KeyCode.W))
+            targetVelocity += transform.forward;
+        if(Input.GetKey(KeyCode.S))
+            targetVelocity -= transform.forward;
+        if(Input.GetKey(KeyCode.A))
+            targetVelocity -= transform.right;
+        if(Input.GetKey(KeyCode.D))
+            targetVelocity += transform.right;
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
+        {
+            fallSpeed = JumpSpeed;
+            isJumping = true;
+        }
+        targetVelocity.Normalize();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
+        {
+            CanDash = false;
+            isDashing = true;
+        }
+    }
+    
     // Called every frame to update player look
     void UpdateLook()
     {
@@ -111,24 +151,18 @@ public class Player : MonoBehaviour
     // Called every frame to update player movement
     void UpdateMovement()
     {
-        float fallSpeed = PlayerRigidBody.velocity.y;
-        Vector3 targetVelocity = Vector3.zero;
-        if(Input.GetKey(KeyCode.W))
-            targetVelocity += transform.forward;
-        if(Input.GetKey(KeyCode.S))
-            targetVelocity -= transform.forward;
-        if(Input.GetKey(KeyCode.A))
-            targetVelocity -= transform.right;
-        if(Input.GetKey(KeyCode.D))
-            targetVelocity += transform.right;
-        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
-            fallSpeed = JumpSpeed;
-        targetVelocity.Normalize();
-        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
+        fallSpeed = PlayerRigidBody.velocity.y;
+        if (isJumping)
         {
-            CanDash = false;
+            fallSpeed = JumpSpeed;
+            isJumping = false;
+        }
+
+        if (isDashing)
+        {
             DashCooldownRemaining = DashCoolDown;
             StrafeVelocity += targetVelocity * DashSpeed;
+            isDashing = false;
         }
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 

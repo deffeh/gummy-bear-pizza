@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum Difficulty {
@@ -18,7 +20,6 @@ public class DifficultyColumn : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public Transform SelectorRing;
     private const float notHoverOpacity = 0.9f;
     private const float ANIM_DURATION = 0.5f;
-    // private Sequence seq;
     
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -30,7 +31,7 @@ public class DifficultyColumn : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        GetComponent<CanvasGroup>().DOFade(notHoverOpacity, ANIM_DURATION);
+        GetComponent<CanvasGroup>()?.DOFade(notHoverOpacity, ANIM_DURATION);
     }
 
     void Awake()
@@ -42,12 +43,10 @@ public class DifficultyColumn : MonoBehaviour, IPointerEnterHandler, IPointerExi
     // Start is called before the first frame update
     void Start()
     {
-        
         GetComponent<Button>().onClick.AddListener(() => {
-
+            PersistData.Instance.CurrDifficulty = difficulty;
+            SceneManager.LoadSceneAsync("CharacterCustomize");
         });
     }
-
-    
 
 }

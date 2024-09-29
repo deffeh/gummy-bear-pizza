@@ -20,7 +20,12 @@ public class JumpTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))
+        {
+            print(other.name);
             Player.Instance.CanJump = true;
+        }
+        
+        
     }
 
     void OnTriggerExit(Collider other)
