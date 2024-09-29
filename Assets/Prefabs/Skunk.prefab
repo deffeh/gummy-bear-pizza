@@ -125,6 +125,8 @@ MonoBehaviour:
   DeathEffect: {fileID: 8521852251528875114, guid: e0e30ed89133ab749872df63229debcb, type: 3}
   DamageTakenSFX: {fileID: 4561863906338126844}
   CurrentRoot: {fileID: 0}
+  Sandwich: {fileID: 797493815452960240, guid: c0c23625621989f49a9a00d95c0f40be, type: 3}
+  DogTreat: {fileID: 410135587662733373, guid: 8e4d73cf39e67e0468a6f8d5ee6680ca, type: 3}
   player: {fileID: 0}
   human: {fileID: 0}
   NavAgent: {fileID: 5044219951135914539}
