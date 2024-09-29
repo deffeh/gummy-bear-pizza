@@ -62,7 +62,7 @@ public class Human : MonoBehaviour
         if (CurrentHealth == 0) {
             //unborn yourself
         } else {
-            OnTakeDamage?.Invoke(CurrentHealth);
         }
+        OnTakeDamage?.Invoke(CurrentHealth);
     }
 }
