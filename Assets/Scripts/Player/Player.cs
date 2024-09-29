@@ -132,6 +132,7 @@ public class Player : MonoBehaviour
         {
             fallSpeed = JumpSpeed;
             isJumping = true;
+            CanJump = false;
         }
         targetVelocity.Normalize();
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)

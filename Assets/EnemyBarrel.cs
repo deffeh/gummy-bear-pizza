@@ -38,6 +38,11 @@ public class EnemyBarrel : EnemyBase
                     {
                         hit.GetComponent<Human>().OnHit(Damage);
                     }
+                    
+                    if (hit.GetComponent<EnemyBase>())
+                    {
+                        hit.GetComponent<EnemyBase>().TakeDamage(Damage);
+                    }
                 }
             }
         }
