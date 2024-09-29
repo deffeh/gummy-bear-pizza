@@ -280,7 +280,6 @@ public class Player : MonoBehaviour
     // Called to bite
     void Bite()
     {
-        Debug.Log("Bite");
         RaycastHit hit;
         if (Physics.SphereCast(MouthPosition.position, BiteRadius, MouthPosition.forward, out hit, BiteRange))
         {
@@ -317,7 +316,6 @@ public class Player : MonoBehaviour
     {
         if (Human.CurrentState == HumanState.ReloadingNav || Human.CurrentState == HumanState.Reloading)
         return;
-        Debug.Log("Command");
         RaycastHit hit;
         if (Physics.Raycast(PlayerCamera.transform.position, PlayerCamera.transform.forward, out hit, CommandRange, ~CommandLayerMask))
         {

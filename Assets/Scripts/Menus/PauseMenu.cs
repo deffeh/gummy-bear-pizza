@@ -58,20 +58,20 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (!AllowPause) {return;}
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
+        // if (!AllowPause) {return;}
+        // if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
             
-            isPaused = !isPaused;
-            if (isPaused) {
-                Cursor.lockState = CursorLockMode.None;
-            } else {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-            PauseContainer.SetActive(isPaused);
-            if (!isPaused) {
-                Settings.InstantHide();
-            }
-        }
+        //     isPaused = !isPaused;
+        //     if (isPaused) {
+        //         Cursor.lockState = CursorLockMode.None;
+        //     } else {
+        //         Cursor.lockState = CursorLockMode.Locked;
+        //     }
+        //     PauseContainer.SetActive(isPaused);
+        //     if (!isPaused) {
+        //         Settings.InstantHide();
+        //     }
+        // }
     }
 
 }

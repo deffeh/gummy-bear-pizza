@@ -11,7 +11,6 @@ public class HumanHealthCollectable : CollectableBase
         {
             if (human.CurrentHealth >= human.MaxHealth) return;
             human.OnHeal(HealAmount);
-            Debug.Log("Human collected health pickup");
             Destroy(gameObject);
         }
     }

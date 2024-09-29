@@ -45,7 +45,6 @@ public class AcornProjectile : MonoBehaviour
     {
         CancelInvoke(nameof(SelfDestruct));
         Instantiate(AcornEffectPrefab, transform.position, quaternion.identity, null);
-        Debug.Log("Destroying projectile");
     }
 
     void OnTriggerEnter(Collider other)
