@@ -27,6 +27,11 @@ public class ArmAnimation : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
+    private void Start()
+    {
+        rect.anchoredPosition = StartPos;
+    }
+
     public static void PlayAnimation()
     {
         if(!Instance) return;
@@ -36,15 +41,12 @@ public class ArmAnimation : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(PlayAnim());
-        }
     }
 
     private void Animation()
     {
         StopAllCoroutines();
+        StartCoroutine(PlayAnim());
     }
     
     private IEnumerator PlayAnim()
