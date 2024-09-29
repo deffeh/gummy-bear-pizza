@@ -126,17 +126,20 @@ MonoBehaviour:
   DamageTakenSFX: {fileID: 4561863906338126844}
   CurrentRoot: {fileID: 0}
   player: {fileID: 0}
+  human: {fileID: 0}
   NavAgent: {fileID: 5044219951135914539}
   rb: {fileID: 0}
   Speed: 5
   Damage: 25
   curState: 0
+  PlayerTriggerDist: 10
   FartTriggerDist: 3
   FartChargeDuration: 1
   FartRecoveryDuration: 3
   FartDist: 3
   FartWalkSpeed: 0.1
   FartRadius: 3
+  animator: {fileID: 7920614991068114754}
   fartCloud: {fileID: 3787175047686935848, guid: 0f6ba4f8461188d47b6cecedc37f6caa, type: 3}
   mask:
     serializedVersion: 2
@@ -251,6 +254,7 @@ GameObject:
   - component: {fileID: 1621158328584527418}
   - component: {fileID: 3256179691273100446}
   - component: {fileID: 1743533500269563626}
+  - component: {fileID: 7920614991068114754}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -338,3 +342,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentObject: {fileID: 0}
+--- !u!95 &7920614991068114754
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8999542836645282502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5e17ce51b7c0de4bbd710d3001ea2d6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -34,6 +34,7 @@ public class Skunk : EnemyBase
     public float FartDist = 5f;
     public float FartWalkSpeed = 2f;
     public float FartRadius = 5f;
+    public Animator animator;
     public ParticleSystem fartCloud;
     public LayerMask mask;
     private float seqLerpVal;
@@ -58,6 +59,7 @@ public class Skunk : EnemyBase
         human = Human.Instance.GetComponent<Rigidbody>();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         NavAgent.speed = Speed;
         curState = SkunkState.Idle;
         SetToActive();
@@ -88,6 +90,7 @@ public class Skunk : EnemyBase
     }
 
     private void SearchForPlayer() {
+        animator.Play("SkunkIdle");
         float distToPlayer = Vector3.Distance(rb.position, player.position);
         float distToHuman = Vector3.Distance(rb.position, human.position);
         if (distToPlayer < PlayerTriggerDist || distToHuman < PlayerTriggerDist) {
@@ -131,6 +134,7 @@ public class Skunk : EnemyBase
     }
 
     private void FartRecoveryState() {
+        animator.Play("SkunkIdle");
         var seq = DOTween.Sequence();
         seq.AppendInterval(FartRecoveryDuration);
         seq.AppendCallback(() => {
@@ -144,6 +148,8 @@ public class Skunk : EnemyBase
     private void UpdateState(SkunkState state) {
         switch (state) {
             case SkunkState.Active:
+                animator.Play("SkunkRun");
+                Debug.Log("Switching to run anim");
                 Sprite.material.SetFloat("_Brightness", 1f);
             break;
 
