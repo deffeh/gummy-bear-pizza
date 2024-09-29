@@ -26,7 +26,7 @@ public class AcornProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     void SelfDestruct()

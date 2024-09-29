@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1925338825689528150}
   - component: {fileID: 2158375174782871251}
   - component: {fileID: 4543131045055576328}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Squirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +61,9 @@ MonoBehaviour:
   projectileSpawnDistFromPlayer: 0.5
   AttackCooldown: 2
   MaxAttackRange: 15
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 119
 --- !u!54 &1925338825689528150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,7 +145,7 @@ GameObject:
   - component: {fileID: 1338625005515544511}
   - component: {fileID: 8584385320039890725}
   - component: {fileID: 3258369152672316701}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
