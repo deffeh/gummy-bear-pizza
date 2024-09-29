@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     public float BarkCooldown;
     private float BarkCooldownRemaining;
     private bool CanBark;
+    public int MaxBarkAmmo;
+    private int BarkAmmo;
 
     // Bite
     public int BiteDamage;
@@ -48,8 +50,8 @@ public class Player : MonoBehaviour
     private float BiteCooldownRemaining;
     private bool CanBite;
     
-    // Human Interaction
-    public bool CanInteract;
+    // Human Reload
+    public bool CanReload;
 
     // Human Command
     public float CommandRange;
@@ -94,8 +96,8 @@ public class Player : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         CurrentHealth = MaxHealth;
+        BarkAmmo = MaxBarkAmmo;
         Human = Human.Instance;
-        CanInteract = false;
         if (PauseMenu.Instance) {
             SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
             MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
@@ -119,8 +121,8 @@ public class Player : MonoBehaviour
             Bite();
         if (Input.GetKeyDown(KeyCode.Mouse2))
             CommandHuman();
-        if (Input.GetKeyDown(KeyCode.F) && CanInteract)
-            Interact();
+        if (Input.GetKeyDown(KeyCode.R) && CanReload)
+            BeginReload();
         Model.position = Vector3.Lerp(Model.position, transform.position, 30 * Time.deltaTime);
         Model.rotation = transform.rotation;
     }
@@ -226,6 +228,9 @@ public class Player : MonoBehaviour
     // Called to bark
     void Bark()
     {
+        if (BarkAmmo <= 0)
+            return;
+        --BarkAmmo;
         RaycastHit[] hits = Physics.SphereCastAll(MouthPosition.position, BarkRadius, MouthPosition.forward, BarkRange);
         foreach (RaycastHit hit in hits)
         {
@@ -278,6 +283,8 @@ public class Player : MonoBehaviour
 
     void CommandHuman()
     {
+        if (Human.CurrentState == HumanState.ReloadingNav || Human.CurrentState == HumanState.Reloading)
+        return;
         Debug.Log("Command");
         RaycastHit hit;
         if (Physics.Raycast(PlayerCamera.transform.position, PlayerCamera.transform.forward, out hit, CommandRange, ~CommandLayerMask))
@@ -286,9 +293,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Interact()
+    void BeginReload()
     {
-        Human.Interact();
+        Human.BeginReload();
+    }
+
+    public void Reload()
+    {
+        BarkAmmo = MaxBarkAmmo;
+        Human.CurrentState = HumanState.Idle;
     }
 
     public void AddHealth(int HealAmount)

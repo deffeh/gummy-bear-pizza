@@ -30,7 +30,6 @@ public class JumpTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
         {
-            print(other.name);
             Player.Instance.CanJump = true;
         }
     }

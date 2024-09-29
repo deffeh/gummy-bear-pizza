@@ -185,7 +185,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2237472770271694516}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -202,7 +202,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!195 &212622003823398624
 NavMeshAgent:
@@ -238,5 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca6e94544d27704486bdd2dca78b392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentHealth: 0
+  MaxHealth: 0
+  CurrentState: 0
   HumanRigidBody: {fileID: 6249540078650686519}
   HumanNavMeshAgent: {fileID: 212622003823398624}

@@ -4,11 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum HumanState
+{
+    Idle,
+    ReloadingNav,
+    Reloading
+}
+
 public class Human : MonoBehaviour
 {
     public static Human Instance;
     public int CurrentHealth;
     public int MaxHealth;
+
+    private Player Player;
+    public HumanState CurrentState;
 
     public Rigidbody HumanRigidBody;
     public NavMeshAgent HumanNavMeshAgent;
@@ -32,7 +42,8 @@ public class Human : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        CurrentState = HumanState.Idle;
+        Player = Player.Instance;
     }
 
     // Update is called once per frame
@@ -41,15 +52,31 @@ public class Human : MonoBehaviour
         
     }
 
+    void FixedUpdate()
+    {
+        switch(CurrentState)
+        {
+            case HumanState.ReloadingNav:
+            MoveTo(Player.transform.position);
+            break;
+        }
+    }
+
     public void MoveTo(Vector3 target)
     {
         HumanRigidBody.rotation.SetLookRotation(target);
         HumanNavMeshAgent.SetDestination(target);
     }
 
-    public void Interact()
+    public void BeginReload()
     {
-        Debug.Log("TODO: give treat and heal");
+        CurrentState = HumanState.ReloadingNav;
+    }
+
+    public void Reload()
+    {
+        CurrentState = HumanState.Reloading;
+        Player.Reload();
     }
 
     public void OnHeal(int heal) {

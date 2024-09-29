@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class HumanInteractionTrigger : MonoBehaviour
 {
+    private Human Human;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Human = Human.Instance;
     }
 
     // Update is called once per frame
@@ -18,13 +20,13 @@ public class HumanInteractionTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-            Player.Instance.CanInteract = true;
+        if (other.CompareTag("Player") && (Human.CurrentState == HumanState.ReloadingNav))
+            Human.Reload();
     }
 
-    void OnTriggerExit(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
-            Player.Instance.CanInteract = false;
+        if (other.CompareTag("Player") && (Human.CurrentState == HumanState.ReloadingNav))
+            Human.Reload();
     }
 }

@@ -488,11 +488,12 @@ MonoBehaviour:
   BarkRange: 2
   BarkRadius: 2
   BarkCooldown: 0.5
+  MaxBarkAmmo: 5
   BiteDamage: 25
   BiteRange: 0.5
   BiteRadius: 0.5
   BiteCooldown: 0.5
-  CanInteract: 0
+  CanReload: 1
   CommandRange: 500
   CommandLayerMask:
     serializedVersion: 2
