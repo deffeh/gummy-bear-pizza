@@ -15,6 +15,7 @@ public class CharacterCustomize : MonoBehaviour
     public GameObject StandardDiff;
     public GameObject HardDiff;
     public Button PlayButton;
+    public GameObject vacuum;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,7 @@ public class CharacterCustomize : MonoBehaviour
     }
 
     public void StartGame() {
+        vacuum.SetActive(true);
         if (PersistData.Instance) {
             if (dogName.text.Length <= 0) {
                 PersistData.Instance.DogName = "Dog";
@@ -71,6 +73,7 @@ public class CharacterCustomize : MonoBehaviour
 
         //load game
         PersistData.Instance.PlaySound();
+        LoadingScreen.Instance.LoadNewScene("BaseScene");
     }
 
 }

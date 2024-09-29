@@ -22,7 +22,6 @@ public abstract class CollectableBase : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Pickup collected");
         Collect(other);
     }
 

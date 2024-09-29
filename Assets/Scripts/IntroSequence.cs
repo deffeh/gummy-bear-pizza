@@ -21,6 +21,7 @@ public class IntroSequence : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LoadingScreen.Instance.GetComponent<AudioSource>().Stop();
         Cursor.lockState = CursorLockMode.Locked;
         GameCanvas.gameObject.SetActive(false);
         PauseMenu.Instance.AllowPause = false;

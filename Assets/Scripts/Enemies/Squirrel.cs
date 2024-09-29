@@ -112,7 +112,6 @@ public class Squirrel : EnemyBase
             return !collidingPlayer.IsUnityNull() || !collidingHuman.IsUnityNull();
         }
 
-        Debug.Log("hit not detected");
 
         return false;
     }

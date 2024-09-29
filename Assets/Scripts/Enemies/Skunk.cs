@@ -138,7 +138,6 @@ public class Skunk : EnemyBase
         var seq = DOTween.Sequence();
         seq.AppendInterval(FartRecoveryDuration);
         seq.AppendCallback(() => {
-            Debug.Log("Recovery");
             Sprite.material.SetFloat("_Brightness", 1f);
             UpdateState(SkunkState.Idle);
         });
@@ -149,7 +148,6 @@ public class Skunk : EnemyBase
         switch (state) {
             case SkunkState.Active:
                 animator.Play("SkunkRun");
-                Debug.Log("Switching to run anim");
                 Sprite.material.SetFloat("_Brightness", 1f);
             break;
 
