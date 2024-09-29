@@ -865,6 +865,7 @@ MonoBehaviour:
   NumSandwichesText: {fileID: 663853669800292592}
   DogPic: {fileID: 8003908830601921298}
   HumanPic: {fileID: 740388347035390920}
+  Dog_NameText: {fileID: 4984582646662007303}
 --- !u!1 &3509034379287288449
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,6 @@ public class CharacterCustomize : MonoBehaviour
         brightnessSlider.value = brightness;
 
         hueSlider.onValueChanged.AddListener((float val) => {
-            Debug.Log("owo");
             dogSnout.SetFloat("_Hue", val);
         });
 
@@ -71,6 +70,7 @@ public class CharacterCustomize : MonoBehaviour
         }
 
         //load game
+        PersistData.Instance.PlaySound();
     }
 
 }

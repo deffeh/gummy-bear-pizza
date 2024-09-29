@@ -45,6 +45,7 @@ public class DifficultyColumn : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         GetComponent<Button>().onClick.AddListener(() => {
             PersistData.Instance.CurrDifficulty = difficulty;
+            PersistData.Instance.PlaySound();
             SceneManager.LoadSceneAsync("CharacterCustomize");
         });
     }

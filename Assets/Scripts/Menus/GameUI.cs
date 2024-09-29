@@ -12,6 +12,7 @@ public class GameUI : MonoBehaviour
     public TMP_Text NumSandwichesText;
     public Image DogPic;
     public Image HumanPic; 
+    public TMP_Text Dog_NameText;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,10 @@ public class GameUI : MonoBehaviour
             hum.OnTakeDamage += HumanDamaged;
             HumanHealthText.text = hum.CurrentHealth.ToString();
         }
+        if (PersistData.Instance) {
+            Dog_NameText.text = PersistData.Instance.DogName + " Energy";
+        }
+
     }
 
     void OnDestroy() {
