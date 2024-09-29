@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 100
   CurHp: 0
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 6771151104990698355}
   DeathEffect: {fileID: 8521852251528875114, guid: e0e30ed89133ab749872df63229debcb, type: 3}
   CurState: 0
   FlightCurve:
