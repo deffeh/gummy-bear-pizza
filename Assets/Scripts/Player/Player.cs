@@ -246,6 +246,13 @@ public class Player : MonoBehaviour
         OnTakeDamage?.Invoke(CurrentHealth);
 
     }
+    
+    public void OnHit(int damage, Vector3 HitPos)
+    {
+        OnHit(damage);
+
+        StrafeVelocity += (transform.position - HitPos).normalized * damage * 3;
+    }
 
     void CommandHuman()
     {
