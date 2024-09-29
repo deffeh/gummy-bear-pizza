@@ -63,6 +63,6 @@ public abstract class EnemyBase : MonoBehaviour
             Instantiate(DeathEffect, transform.position, quaternion.identity, null);
             CameraShake.Shake(1);
         }
-        Destroy(gameObject);
+        Destroy(transform.root.gameObject);
     }
 }
