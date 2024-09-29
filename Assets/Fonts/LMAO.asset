@@ -58,11 +58,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: SHPinscher-Regular SDF
+  m_Name: LMAO
   m_EditorClassIdentifier: 
-  hashCode: -1706586875
+  hashCode: 2651567
   material: {fileID: 3329670870864047230}
-  materialHashCode: 1440443269
+  materialHashCode: 390403375
   m_Version: 1.1.0
   m_SourceFontFileGUID: 645e70b2791958b43b0b33270136476d
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 645e70b2791958b43b0b33270136476d, type: 3}
@@ -991,6 +991,21 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
+  - m_Index: 972
+    m_Metrics:
+      m_Width: 43.203125
+      m_Height: 52.203125
+      m_HorizontalBearingX: 4.046875
+      m_HorizontalBearingY: 52.203125
+      m_HorizontalAdvance: 51.296875
+    m_GlyphRect:
+      m_X: 434
+      m_Y: 172
+      m_Width: 44
+      m_Height: 53
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 973
     m_Metrics:
       m_Width: 9
@@ -1066,25 +1081,14 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-  - m_Index: 972
-    m_Metrics:
-      m_Width: 43.203125
-      m_Height: 52.203125
-      m_HorizontalBearingX: 4.046875
-      m_HorizontalBearingY: 52.203125
-      m_HorizontalAdvance: 51.296875
-    m_GlyphRect:
-      m_X: 434
-      m_Y: 172
-      m_Width: 44
-      m_Height: 53
-    m_Scale: 1
-    m_AtlasIndex: 0
-    m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 32
     m_GlyphIndex: 1027
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 35
+    m_GlyphIndex: 972
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 45
@@ -1341,10 +1345,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 8230
     m_GlyphIndex: 969
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 35
-    m_GlyphIndex: 972
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: -3431831002728682377}
@@ -1914,7 +1914,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.19
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
