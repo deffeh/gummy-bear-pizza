@@ -61,6 +61,7 @@ MonoBehaviour:
   projectileSpawnDistFromPlayer: 0.5
   AttackCooldown: 2
   MaxAttackRange: 15
+  AggressionRange: 20
   layerMask:
     serializedVersion: 2
     m_Bits: 119
@@ -145,6 +146,7 @@ GameObject:
   - component: {fileID: 1338625005515544511}
   - component: {fileID: 8584385320039890725}
   - component: {fileID: 3258369152672316701}
+  - component: {fileID: 1077280565158651368}
   m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
@@ -231,3 +233,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd8a4ef19b3c8e449adfb3d35a41433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentObject: {fileID: 0}
+--- !u!95 &1077280565158651368
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254511173351460195}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f977606a90d816f47a11d45e2125de43, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

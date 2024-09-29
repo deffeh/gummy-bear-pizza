@@ -28,6 +28,7 @@ public class Squirrel : EnemyBase
     public LayerMask layerMask;
     private bool HasLineOfSight = false;
     private float CurCooldown = 0f;
+    private Animator animator;
 
 
     void Start()
@@ -35,12 +36,12 @@ public class Squirrel : EnemyBase
         base.Start();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         player = Player.Instance.GetComponent<Rigidbody>();
         NavAgent.speed = Speed;
         NavAgent.stoppingDistance = MaxAttackRange;
         
         UpdateState(SquirrelState.Idle);
-        // SetToSearching();
     }
 
     void FixedUpdate()
@@ -100,8 +101,9 @@ public class Squirrel : EnemyBase
 
     void IdleState() {
         NavAgent.isStopped = true;
+        animator.Play("Squirrel_Idle");
+
         float distToPlayer = (player.position - transform.position).magnitude;
-        
         if (distToPlayer < AggressionRange && HasLineOfSight)
         {
             NavAgent.isStopped = false;
@@ -116,6 +118,8 @@ public class Squirrel : EnemyBase
 
     private void SearchingState()
     {
+        animator.Play("Squirrel_Run");
+
         Vector3 direction = player.position - rb.position;
         float targetDist = direction.magnitude;
 
@@ -132,6 +136,7 @@ public class Squirrel : EnemyBase
 
     private void AttackingState()
     {
+        animator.Play("Squirrel_Idle");
         float targetDist = Vector3.Distance(rb.position, player.position);
         if (targetDist <= MaxAttackRange && HasLineOfSight)
         {
