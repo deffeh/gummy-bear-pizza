@@ -410,7 +410,7 @@ MonoBehaviour:
   FlightRate: 0.6
   FireRate: 5
   PigeonProjectile: {fileID: 3455689043857579934, guid: 47d88deaa8347914dbfedb42bc6fb720, type: 3}
-  audiosrc: {fileID: 0}
+  audiosrc: {fileID: 6179230670295760980}
 --- !u!54 &1363073371494202103
 Rigidbody:
   m_ObjectHideFlags: 0
