@@ -50,12 +50,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8ce9c97f921f243a109c62b7f257f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 1
+  MaxHp: 4
   CurHp: 1
   Sprite: {fileID: 8584385320039890725}
   DeathEffect: {fileID: 8521852251528875114, guid: e0e30ed89133ab749872df63229debcb, type: 3}
   DamageTakenSFX: {fileID: 5444180357857112602}
-  CurrentRoot: {fileID: 0}
+  CurrentRoot: {fileID: 1376417012921356438}
   Sandwich: {fileID: 797493815452960240, guid: c0c23625621989f49a9a00d95c0f40be, type: 3}
   DogTreat: {fileID: 410135587662733373, guid: 8e4d73cf39e67e0468a6f8d5ee6680ca, type: 3}
   projectilePrefab: {fileID: 6267157262895107356, guid: f923875a4d471ad4b9b22364f1bde543, type: 3}
@@ -100,7 +100,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!195 &2158375174782871251
 NavMeshAgent:
   m_ObjectHideFlags: 0

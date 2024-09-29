@@ -50,6 +50,9 @@ public class AcornProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        SphereCollider sphereCollider = other.GetComponent<SphereCollider>();
+        if (sphereCollider && sphereCollider.name.Equals("InteractionTrigger")) return;
+
         Player player = other.GetComponent<Player>();
         if (player)
         {
