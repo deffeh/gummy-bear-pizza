@@ -480,6 +480,7 @@ MonoBehaviour:
   Model: {fileID: 6112232232531288539}
   CurrentState: 0
   SpeedLines: {fileID: 8731247112942161233}
+  Hearts: {fileID: 347465237577258402}
   MouseSensitivity: 500
   MovementSpeed: 8
   AccelerationSpeed: 8
