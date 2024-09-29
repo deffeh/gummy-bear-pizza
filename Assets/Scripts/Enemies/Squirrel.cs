@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public enum SquirrelState {
     Idle,
@@ -19,6 +20,7 @@ public class Squirrel : EnemyBase
     public GameObject projectilePrefab;
     public NavMeshAgent NavAgent;
     public Rigidbody player;
+    public Rigidbody human;
     public Rigidbody rb;
     public int Damage = 5;
     public float Speed = 5f;
@@ -28,6 +30,7 @@ public class Squirrel : EnemyBase
     public float MaxAttackRange = 15f;
     public float AggressionRange = 20f;
     public LayerMask layerMask;
+    private Rigidbody curTarget;
     private float attackDelayLength;
     private bool HasLineOfSight = false;
     private bool CanAttack = true;
@@ -47,11 +50,14 @@ public class Squirrel : EnemyBase
                 Damage = (int) ((float)Damage * 1.5f); //raw dog
             }
         }
+
         base.Start();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         player = Player.Instance.GetComponent<Rigidbody>();
+        human = Human.Instance.GetComponent<Rigidbody>();
+        curTarget = FindClosestTarget();
         attackDelayLength = UnityEngine.Random.Range(0, 4) * 0.5f;
         NavAgent.speed = Speed;
         NavAgent.stoppingDistance = MaxAttackRange;
@@ -61,7 +67,7 @@ public class Squirrel : EnemyBase
 
     void FixedUpdate()
     {
-        Debug.Log("Current State: " + curState.ToString());
+        Debug.Log("Current State: " + curState.ToString() + ", Closest target: " + curTarget.name + ", Has LOS with Target: " + HasLineOfSight);
 
         switch (curState) 
         {
@@ -86,24 +92,34 @@ public class Squirrel : EnemyBase
     {
         base.Update();
         HasLineOfSight = CheckLineOfSight();
-        // Debug.Log("Has Line of Sight: " + HasLineOfSight);
+        curTarget = FindClosestTarget();
+    }
+
+    Rigidbody FindClosestTarget()
+    {
+         
+        float distFromPlayer = (player.position - transform.position).magnitude;
+        float distFromHuman = (human.position - transform.position).magnitude;
+        return (distFromPlayer < distFromHuman) ? player : human;
     }
     
     bool CheckLineOfSight()
     {
-        Vector3 diff = player.position - rb.position;
+        Vector3 diff = curTarget.position - transform.position;
         Debug.Log("Casting ray");
         if (Physics.Raycast(transform.position, diff.normalized, out RaycastHit hit, 1000f, layerMask))
         {
-            // Debug.Log("hit detected");
-            // Debug.Log("hitter name: " + hit.collider.name + ", hit pos: " + hit.transform.position + ", player pos: " + player.position);
-            // Debug.Log("collider name: " + hit.collider.name);
+            Debug.Log("hit detected");
+            Debug.Log("hitter name: " + hit.collider.name + ", hit pos: " + hit.transform.position + ", player pos: " + curTarget.position);
+            Debug.Log("collider name: " + hit.collider.name);
 
-            Player collidingPlayer = hit.collider.GetComponent<Player>();  
-            return !collidingPlayer.IsUnityNull();
+            Player collidingPlayer = hit.collider.GetComponent<Player>();
+            Human collidingHuman = hit.collider.GetComponent<Human>();
+
+            return !collidingPlayer.IsUnityNull() || !collidingHuman.IsUnityNull();
         }
 
-        // Debug.Log("hit not detected");
+        Debug.Log("hit not detected");
 
         return false;
     }
@@ -117,8 +133,8 @@ public class Squirrel : EnemyBase
         NavAgent.isStopped = true;
         animator.Play("Squirrel_Idle");
 
-        float distToPlayer = (player.position - transform.position).magnitude;
-        if (distToPlayer < AggressionRange && HasLineOfSight)
+        float distToTarget = (curTarget.position - transform.position).magnitude;
+        if (distToTarget < AggressionRange && HasLineOfSight)
         {
             NavAgent.isStopped = false;
             UpdateState(SquirrelState.Searching);
@@ -129,12 +145,12 @@ public class Squirrel : EnemyBase
     {
         animator.Play("Squirrel_Run");
 
-        Vector3 direction = player.position - rb.position;
+        Vector3 direction = curTarget.position - transform.position;
         float targetDist = direction.magnitude;
 
         if (targetDist > MaxAttackRange || !HasLineOfSight)
         {
-            NavAgent.destination = player.position;
+            NavAgent.destination = curTarget.position;
             NavAgent.stoppingDistance = 0;
         }
         else
@@ -152,7 +168,7 @@ public class Squirrel : EnemyBase
     private void AttackingState()
     {
         animator.Play("Squirrel_Idle");
-        float targetDist = Vector3.Distance(rb.position, player.position);
+        float targetDist = Vector3.Distance(rb.position, curTarget.position);
 
         if (targetDist <= MaxAttackRange && HasLineOfSight)
         {
@@ -179,17 +195,10 @@ public class Squirrel : EnemyBase
     private void ThrowAcorn()
     {
         audiosrc.Play();
-        Vector3 shootDir = (player.position - new Vector3(0f, 0.3f, 0f) - rb.position).normalized;
+        Vector3 shootDir = (curTarget.position - new Vector3(0f, 0.3f, 0f) - transform.position).normalized;
         Vector3 spawnPos = rb.position + new Vector3(0f, 0.5f, 0f);
         
         Instantiate(projectilePrefab, spawnPos, quaternion.identity)
             .GetComponent<AcornProjectile>().Init(projectileSpeed, shootDir, Damage);
     }
-
-    // public void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.green;
-    //     Ray ray = new Ray(rb.position, (player.position - rb.position).normalized);
-    //     Gizmos.DrawLine(rb.position, rb.position + (player.position - rb.position).normalized * 1000);
-    // }
 }
