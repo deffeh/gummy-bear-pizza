@@ -10,6 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     public SpriteRenderer Sprite;
     public GameObject DeathEffect;
+    public AudioSource DamageTakenSFX;
     public GameObject CurrentRoot;
 
     private Material mat;
@@ -32,6 +33,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        DamageTakenSFX.Play();
         if (Sprite)
         {
             StartCoroutine(DamageAnim());

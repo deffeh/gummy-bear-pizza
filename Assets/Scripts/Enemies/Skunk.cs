@@ -34,6 +34,7 @@ public class Skunk : EnemyBase
     public ParticleSystem fartCloud;
     public LayerMask mask;
     private float seqLerpVal;
+    public List<AudioClip> farts; //peak humor
     
 
     // Start is called before the first frame update
@@ -147,7 +148,11 @@ public class Skunk : EnemyBase
                 col.GetComponent<Human>().OnHit(Damage);
             }
         }
-        Instantiate(fartCloud, startPos, Quaternion.identity);
+
+        GameObject cloud = Instantiate(fartCloud.gameObject, startPos, Quaternion.identity);
+        var clip = farts[Random.Range(0, farts.Count)];
+        cloud.GetComponent<AudioSource>().clip = clip;
+        cloud.GetComponent<AudioSource>().Play();
         UpdateState(SkunkState.FartRecovery);
     }
 

@@ -13,6 +13,7 @@ public class EnemyPigeon : EnemyBase
     public float FireRate = 2f;
     public GameObject PigeonProjectile;
     private Rigidbody rb;
+    public AudioSource audiosrc;
     
     // Start is called before the first frame update
     protected void Start()
@@ -48,6 +49,7 @@ public class EnemyPigeon : EnemyBase
             if (t >= FireRate)
             {
                 t = 0;
+                audiosrc.Play();
                 Instantiate(PigeonProjectile, transform.position, quaternion.identity, null);
             }
             yield return null;
