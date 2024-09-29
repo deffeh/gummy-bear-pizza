@@ -155,8 +155,8 @@ public class Squirrel : EnemyBase
 
     private void ThrowAcorn()
     {
-        Vector3 shootDir = (player.position - rb.position).normalized;
-        Vector3 spawnPos = rb.position;
+        Vector3 shootDir = (player.position - new Vector3(0f, 0.3f, 0f) - rb.position).normalized;
+        Vector3 spawnPos = rb.position + new Vector3(0f, 0.5f, 0f);
         
         Instantiate(projectilePrefab, spawnPos, quaternion.identity)
             .GetComponent<AcornProjectile>().Init(projectileSpeed, shootDir);

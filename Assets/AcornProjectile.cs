@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,6 +8,7 @@ public class AcornProjectile : MonoBehaviour
     public float speed;
     public Vector3 direction;
     public SphereCollider triggerVolume;
+    public GameObject AcornEffectPrefab;
     public float lifeSpan = 5f;
     private Rigidbody rb;
 
@@ -40,6 +42,7 @@ public class AcornProjectile : MonoBehaviour
     void OnDestroy()
     {
         CancelInvoke(nameof(SelfDestruct));
+        Instantiate(AcornEffectPrefab, transform.position, quaternion.identity, null);
         Debug.Log("Destroying projectile");
     }
 

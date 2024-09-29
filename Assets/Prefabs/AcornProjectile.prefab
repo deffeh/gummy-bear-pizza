@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd8a4ef19b3c8e449adfb3d35a41433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentObject: {fileID: 0}
 --- !u!1 &6267157262895107356
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   direction: {x: 0, y: 0, z: 0}
-  triggerVolume: {fileID: 0}
+  triggerVolume: {fileID: 8122961304495415508}
+  AcornEffectPrefab: {fileID: 2811192804531843756, guid: 972f6fe35864af54ba0edcf3d5d1d492, type: 3}
   lifeSpan: 5
 --- !u!135 &8122961304495415508
 SphereCollider:
@@ -168,7 +170,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.25
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4596326696856898303
 Rigidbody:
   m_ObjectHideFlags: 0

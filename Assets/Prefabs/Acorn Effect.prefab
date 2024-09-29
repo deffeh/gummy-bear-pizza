@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2565315478799251357}
   - component: {fileID: 2844864098674048706}
   - component: {fileID: 6838754548676438104}
+  - component: {fileID: 3580068951677865811}
   m_Layer: 0
   m_Name: Acorn Effect
   m_TagString: Untagged
@@ -3847,7 +3848,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.3
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -4888,3 +4889,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3580068951677865811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811192804531843756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250972c08e94da54ebea12f245b8fe0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestroyTimer: 5
