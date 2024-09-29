@@ -355,7 +355,7 @@ public class Player : MonoBehaviour
     }
 
     public void SetDogVision(bool isOn) {
-        if (PlayerCamera.GetComponent<DogVisionPostProcess>()) {
+        if (PlayerCamera && PlayerCamera.GetComponent<DogVisionPostProcess>()) {
             PlayerCamera.GetComponent<DogVisionPostProcess>().enabled = isOn;
         }
     }
