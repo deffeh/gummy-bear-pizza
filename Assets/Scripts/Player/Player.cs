@@ -77,8 +77,10 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Human = Human.Instance;
         CanInteract = false;
-        SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
-        MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
+        if (PauseMenu.Instance) {
+            SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
+            MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
+        }
     }
 
     // Update is called once per frame
