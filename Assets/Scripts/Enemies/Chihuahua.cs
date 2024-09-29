@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,28 +16,27 @@ public enum ChihuahuaState {
 public class Chihuahua : EnemyBase
 {
     [Header("Components")]
-    public Rigidbody player; //TODO test
+    [HideInInspector] public Rigidbody player;
     public NavMeshAgent NavAgent;
     public Rigidbody rb;
     [Header("Stats")]
     public float Speed = 10f;
-    public float Damage = 25f;
+    public int Damage = 10;
     [Header("State Stuff")]
     public ChihuahuaState curState;
 
     public float BiteTriggerDist = 1f;
-    public float BiteDuration = 5f;
-    public float BiteRecoveryDuration = 3f;
+    public float BiteRecoveryDuration = 0.5f;
     public float BiteDist = 5f;
-    public float BiteWalkSpeed = 2f;
     public float BiteRadius = 5f;
-    private float lerpVal;
+    public LayerMask mask;
     
 
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
+        player = Player.Instance.GetComponent<Rigidbody>();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         NavAgent.speed = Speed;
@@ -56,11 +56,9 @@ public class Chihuahua : EnemyBase
             break;
 
             case ChihuahuaState.Biting:
-            BitingState();
             break;
 
             case ChihuahuaState.BitingRecovery:
-            BitingRecoveryState();
             break;
         }
     }
@@ -83,38 +81,39 @@ public class Chihuahua : EnemyBase
         }
     }
 
-    private void BitingState() {
-        lerpVal += Time.deltaTime / BiteDuration;
-        if (lerpVal >= 1) {
-            UpdateState(ChihuahuaState.BitingRecovery);
-        }
-        NavAgent.destination = rb.position;
-    }
-
     private void BitingRecoveryState() {
-        lerpVal += Time.deltaTime / BiteRecoveryDuration;
-        if (lerpVal >= 1) {
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(BiteRecoveryDuration);
+        seq.OnComplete(() => {
             UpdateState(ChihuahuaState.Active);
-        }
+        });
+        seq.Play();
     }
 
     private void UpdateState(ChihuahuaState state) {
         switch (state) {
             case ChihuahuaState.Biting:
-                lerpVal = 0;
                 rb.freezeRotation = true;
                 BiteThings();
             break;
             case ChihuahuaState.BitingRecovery:
-                lerpVal = 0;
                 rb.freezeRotation = false;
+                BitingRecoveryState();
             break;
         }
         curState = state;
     }
 
     private void BiteThings() {
-        var startPos = rb.position + transform.forward * BiteDist;
-        Physics.SphereCast(origin: startPos, BiteRadius, Vector3.forward, out RaycastHit hit);
+        var startPos = transform.position + transform.forward * BiteDist;
+        var colls = Physics.OverlapSphere(startPos, BiteRadius, mask);
+        foreach (var col in colls) {
+            if (col.GetComponent<Player>()) {
+                col.GetComponent<Player>().OnHit(Damage);
+            } else if (col.GetComponent<Human>()) {
+                col.GetComponent<Human>().OnHit(Damage);
+            }
+        }
+        UpdateState(ChihuahuaState.BitingRecovery);
     }
 }

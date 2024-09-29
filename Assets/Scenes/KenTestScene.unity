@@ -292,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1484756304
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -546,6 +546,67 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 2df52ebe6f2373f4b87df3a9a6908950, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1001 &1693398269
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -1108002570674703561, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326522731729591086, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332573774936872531, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
+      propertyPath: m_Name
+      value: Chihuahua
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d314fc3b97a1480f8c2c7eeaff21930, type: 3}
 --- !u!1 &1778869018
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +742,10 @@ PrefabInstance:
     - target: {fileID: 8899986713935243398, guid: f4cc77b03b9301a4bb77dd438d927d8a, type: 3}
       propertyPath: m_Name
       value: Skunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8899986713935243398, guid: f4cc77b03b9301a4bb77dd438d927d8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -904,4 +969,5 @@ SceneRoots:
   - {fileID: 5491989216225896039}
   - {fileID: 8356165928996097134}
   - {fileID: 1778869021}
+  - {fileID: 1693398269}
   - {fileID: 131030757}
