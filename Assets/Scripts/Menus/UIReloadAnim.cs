@@ -11,7 +11,7 @@ public class UIReloadAnim : MonoBehaviour
     public Image barFill;
     public void Show() {
         barFill.fillAmount = 0;
-        reloadText.text = "Reloading...";
+        reloadText.text = "Reloading";
         gameObject.SetActive(true);
         var seq = DOTween.Sequence();
         float fillVal = 0;

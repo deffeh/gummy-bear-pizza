@@ -20,7 +20,7 @@ public class PickupAnim : MonoBehaviour
     void Update()
     {   
         float oscillate = (Mathf.Sin(Time.time * freq) * amp);
-        Debug.Log(oscillate);
+        // Debug.Log(oscillate);
         transform.position = new Vector3(transform.position.x,startY + oscillate, transform.position.z);
         transform.Rotate(0,0.1f,0);
     }
