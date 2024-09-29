@@ -28,7 +28,6 @@ public class EnemyPigeon : EnemyBase
     void Update()
     {
         float t = (Time.time * FlightRate) % 1f;
-        print(t);
         rb.AddForce(Vector3.up * FlightCurve.Evaluate(t) * FlightStrength * Time.deltaTime * rb.mass);
         switch (CurState)
         {
