@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour
@@ -11,6 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     public SpriteRenderer Sprite;
     public GameObject DeathEffect;
+    public GameObject CurrentRoot;
 
     private Material mat;
     // Start is called before the first frame update
@@ -56,13 +56,17 @@ public abstract class EnemyBase : MonoBehaviour
         Sprite.color = Color.white;
     }
     
-    public void Die()
+    public virtual void Die()
     {
         if (DeathEffect)
         {
-            Instantiate(DeathEffect, transform.position, quaternion.identity, null);
+            Instantiate(DeathEffect, transform.position, Quaternion.identity, null);
             CameraShake.Shake(1);
         }
-        Destroy(transform.root.gameObject);
+
+        if (!CurrentRoot)
+            Destroy(transform.root.gameObject);
+        else
+            Destroy(CurrentRoot);
     }
 }
