@@ -25279,18 +25279,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8731247112942161233, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8731247112942161233, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 0.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 8731247112942161233, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 9170181505224530063, guid: 19188e9739ecaa249b9b8ed68e25a633, type: 3}
       propertyPath: m_Name
       value: PlayerContainer

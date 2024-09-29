@@ -1429,7 +1429,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7626081652880748731, guid: 3c6f47774d290eb48b8e7ee56bf7f1a7, type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 1.5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626081652880748731, guid: 3c6f47774d290eb48b8e7ee56bf7f1a7, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0.98
       objectReference: {fileID: 0}
     - target: {fileID: 7626081652880748731, guid: 3c6f47774d290eb48b8e7ee56bf7f1a7, type: 3}
       propertyPath: InitialModule.startSize.scalar
