@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -78,6 +74,10 @@ public class Squirrel : EnemyBase
         Vector3 direction = player.position - rb.position;
         float targetDist = direction.magnitude;
 
+        bool hasLOS = CheckForLineOfSight(rb.transform, player.transform);
+
+        
+
         if (targetDist > MaxAttackRange)
         {
             NavAgent.destination = player.position;
@@ -86,6 +86,24 @@ public class Squirrel : EnemyBase
         {
             UpdateState(SquirrelState.Attacking);
         }
+    }
+
+    private bool CheckForLineOfSight(Transform t1, Transform t2)
+    {
+        t1.position += new Vector3(0, 1, 0);
+        Vector3 direction = t1.position - t2.position;
+        if (Physics.Raycast(t1.position, direction.normalized, out RaycastHit hit, direction.magnitude))
+        {
+            
+            Debug.Log("hit pos: " + hit.transform.position + ", hit length: " + hit.distance + ", target pos: " + t2.position);
+            Debug.Log("hit collider name: " + hit.collider.name);  
+        }
+        else
+        {
+            Debug.Log("no hit collison");
+        }
+
+        return true;
     }
 
     private void AttackingState()
@@ -105,11 +123,8 @@ public class Squirrel : EnemyBase
         }
     }
 
-    private void OnDrawGizmos()
+    private void ThrowAcorn()
     {
-        if (curState == SquirrelState.Attacking)
-        {
-            Gizmos.DrawRay(rb.position, player.position);
-        }
-    } 
+        
+    }
 }
