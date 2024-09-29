@@ -251,7 +251,7 @@ public class Player : MonoBehaviour
     {
         OnHit(damage);
 
-        StrafeVelocity += (transform.position - HitPos).normalized * damage * 3;
+        StrafeVelocity += (transform.position - HitPos).normalized * 30;
     }
 
     void CommandHuman()
