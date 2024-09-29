@@ -20,8 +20,8 @@ public class ArmAnimation : MonoBehaviour
     {
         if (Instance)
         {
-            return;
             Destroy(this);
+            return;
         }
         Instance = this;
         rect = GetComponent<RectTransform>();
