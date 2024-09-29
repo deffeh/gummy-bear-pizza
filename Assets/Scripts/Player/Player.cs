@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
     
     public event Action OnBark;
     public event Action OnBite;
+    public event Action OnReload;
     public event Action<int> OnHealed;
     public event Action<int> OnTakeDamage;
 
@@ -321,6 +322,7 @@ public class Player : MonoBehaviour
 
     public void Reload()
     {
+        OnReload?.Invoke();
         BarkAmmo = MaxBarkAmmo;
         Human.CurrentState = HumanState.Idle;
         CurrentState = PlayerState.Reloading;

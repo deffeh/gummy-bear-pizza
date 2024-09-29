@@ -477,11 +477,8 @@ MonoBehaviour:
   CurrentHealth: 100
   MaxHealth: 100
   Model: {fileID: 6112232232531288539}
-<<<<<<< HEAD
   CurrentState: 0
-=======
   SpeedLines: {fileID: 8731247112942161233}
->>>>>>> 5b4cb98a1ef3045b15c4cde76d344b0972996a4b
   MouseSensitivity: 500
   MovementSpeed: 10
   AccelerationSpeed: 5
