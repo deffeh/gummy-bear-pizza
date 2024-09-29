@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,7 @@ using UnityEngine.AI;
 public enum SkunkState {
     Idle,
     Active,
+    FartCharge,
     Farting,
     FartRecovery
 }
@@ -15,7 +17,7 @@ public enum SkunkState {
 public class Skunk : EnemyBase
 {
     [Header("Components")]
-    public Rigidbody player; //TODO test
+    [HideInInspector] public Rigidbody player;
     public NavMeshAgent NavAgent;
     public Rigidbody rb;
     [Header("Stats")]
@@ -24,18 +26,21 @@ public class Skunk : EnemyBase
     [Header("State Stuff")]
     public SkunkState curState;
     public float FartTriggerDist = 30f;
-    public float FartDuration = 5f;
+    public float FartChargeDuration = 3f;
     public float FartRecoveryDuration = 3f;
     public float FartDist = 5f;
     public float FartWalkSpeed = 2f;
     public float FartRadius = 5f;
-    private float lerpVal;
+    public ParticleSystem fartCloud;
+    public LayerMask mask;
+    private float seqLerpVal;
     
 
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
+        player = Player.Instance.GetComponent<Rigidbody>();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         NavAgent.speed = Speed;
@@ -54,8 +59,10 @@ public class Skunk : EnemyBase
             ActiveState();
             break;
 
+            case SkunkState.FartCharge:
+            break;
+
             case SkunkState.Farting:
-            FartingState();
             break;
 
             case SkunkState.FartRecovery:
@@ -77,49 +84,71 @@ public class Skunk : EnemyBase
         } 
         else 
         {
-            UpdateState(SkunkState.Farting);
+            UpdateState(SkunkState.FartCharge);
         }
     }
 
-    private void FartingState() {
-        lerpVal += Time.deltaTime / FartDuration;
-        if (lerpVal >= 1) {
-            UpdateState(SkunkState.FartRecovery);
-        }
+    private void FartCharge() {
         NavAgent.destination = rb.position;
+        seqLerpVal = 1f;
+        var seq = DOTween.Sequence();
+        seq.Append(DOTween.To(() => seqLerpVal, x => seqLerpVal = x, 100f, FartChargeDuration));
+        seq.OnUpdate(() => {
+            Sprite.material.SetFloat("_Brightness", seqLerpVal);
+        });
+        seq.OnComplete( () => {
+            Sprite.material.SetFloat("_Brightness", 0.2f);
+            UpdateState(SkunkState.Farting);
+        });
+        seq.Play();
     }
 
     private void FartRecoveryState() {
-        lerpVal += Time.deltaTime / FartRecoveryDuration;
-        if (lerpVal >= 1) {
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(FartRecoveryDuration);
+        seq.AppendCallback(() => {
+            Debug.Log("Recovery");
+            Sprite.material.SetFloat("_Brightness", 1f);
             UpdateState(SkunkState.Active);
-        }
+        });
+        seq.Play();
     }
 
     private void UpdateState(SkunkState state) {
         switch (state) {
+            case SkunkState.Active:
+                Sprite.material.SetFloat("_Brightness", 1f);
+            break;
+
+            case SkunkState.FartCharge:
+                FartCharge();
+            break;
+
             case SkunkState.Farting:
-                lerpVal = 0;
                 rb.freezeRotation = true;
                 SprayGas();
             break;
+
             case SkunkState.FartRecovery:
-                lerpVal = 0;
                 rb.freezeRotation = false;
+                FartRecoveryState();
             break;
         }
         curState = state;
     }
 
     private void SprayGas() {
-        var startPos = rb.position + transform.forward * FartDist;
-        Physics.SphereCast(origin: startPos, FartRadius, Vector3.forward, out RaycastHit hit);
+        var startPos = transform.position + (Vector3.up * 1f);
+        if (Physics.SphereCast(origin: startPos, FartRadius, Vector3.forward, out RaycastHit hit, 100f, mask)) {
+        }
+        Instantiate(fartCloud, startPos, Quaternion.identity);
+        UpdateState(SkunkState.FartRecovery);
     }
 
-    private void OnDrawGizmos() {
-        if (curState == SkunkState.Farting) {
-            var startPos = rb.position + transform.forward * FartDist;
-            Gizmos.DrawSphere(startPos, FartRadius);
-        }
-    }
+    // private void OnDrawGizmos() {
+    //     if (curState == SkunkState.Farting) {
+    //         var startPos = rb.position + transform.forward * FartDist;
+    //         Gizmos.DrawSphere(startPos, FartRadius);
+    //     }
+    // }
 }
