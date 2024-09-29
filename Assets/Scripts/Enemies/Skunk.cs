@@ -22,7 +22,7 @@ public class Skunk : EnemyBase
     public Rigidbody rb;
     [Header("Stats")]
     public float Speed = 10f;
-    public float Damage = 25f;
+    public int Damage = 20;
     [Header("State Stuff")]
     public SkunkState curState;
     public float FartTriggerDist = 30f;
@@ -139,16 +139,22 @@ public class Skunk : EnemyBase
 
     private void SprayGas() {
         var startPos = transform.position + (Vector3.up * 1f);
-        if (Physics.SphereCast(origin: startPos, FartRadius, Vector3.forward, out RaycastHit hit, 100f, mask)) {
+        var colls = Physics.OverlapSphere(startPos, FartRadius, ~mask);
+        foreach (var col in colls) {
+            if (col.GetComponent<Player>()) {
+                col.GetComponent<Player>().OnHit(Damage);
+            } else if (col.GetComponent<Human>()) {
+                col.GetComponent<Human>().OnHit(Damage);
+            }
         }
         Instantiate(fartCloud, startPos, Quaternion.identity);
         UpdateState(SkunkState.FartRecovery);
     }
 
-    // private void OnDrawGizmos() {
-    //     if (curState == SkunkState.Farting) {
-    //         var startPos = rb.position + transform.forward * FartDist;
-    //         Gizmos.DrawSphere(startPos, FartRadius);
-    //     }
-    // }
+    private void OnDrawGizmos() {
+        if (curState == SkunkState.Farting) {
+            var startPos = transform.position + (Vector3.up * 1f);
+            Gizmos.DrawSphere(startPos, FartRadius);
+        }
+    }
 }
