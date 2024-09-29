@@ -24,6 +24,9 @@ public class Human : MonoBehaviour
     public NavMeshAgent HumanNavMeshAgent;
     public event Action<int> OnTakeDamage;
     public event Action<int> OnHealed;
+    public Animator anim;
+    public LineRenderer lr;
+    public float lineSize = 1f;
 
 
     // real shit?
@@ -44,12 +47,22 @@ public class Human : MonoBehaviour
     {
         CurrentState = HumanState.Idle;
         Player = Player.Instance;
+        lr.startWidth = lineSize;
+        lr.endWidth = lineSize;
+        lr.positionCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (HumanNavMeshAgent.remainingDistance <= HumanNavMeshAgent.stoppingDistance) {
+            anim.Play("HumanIdle");
+            lr.positionCount = 0;
+        } else {
+            Vector3[] pathCorners = HumanNavMeshAgent.path.corners;
+            lr.positionCount = pathCorners.Length;
+            lr.SetPositions(pathCorners);
+        }
     }
 
     void FixedUpdate()
@@ -64,6 +77,7 @@ public class Human : MonoBehaviour
 
     public void MoveTo(Vector3 target)
     {
+        anim.Play("HumanWalk");
         HumanRigidBody.rotation.SetLookRotation(target);
         HumanNavMeshAgent.SetDestination(target);
     }
