@@ -11,6 +11,7 @@ public class TriggerEnding : MonoBehaviour
         }
         if (other.GetComponent<Player>()) {
             entered = true;
+            PauseMenu.Instance.AllowPause = false;
             LoadingScreen.Instance.LoadNewScene("EndingScene");
         }
     }
