@@ -40,4 +40,9 @@ public class Human : MonoBehaviour
         HumanRigidBody.rotation.SetLookRotation(target);
         HumanNavMeshAgent.SetDestination(target);
     }
+
+    public void Interact()
+    {
+        Debug.Log("TODO: give treat and heal");
+    }
 }

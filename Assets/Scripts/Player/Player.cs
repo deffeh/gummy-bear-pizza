@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     public Transform MouthPosition;
     public int CurrentHealth;
     public int MaxHealth;
+    public Transform Model;
 
     // Look
     public float MouseSensitivity;
@@ -24,6 +26,10 @@ public class Player : MonoBehaviour
     public float AccelerationSpeed;
     public float JumpSpeed;
     public bool CanJump;
+    public float DashSpeed;
+    public float DashCoolDown;
+    private float DashCooldownRemaining;
+    private bool CanDash;
     private Vector3 StrafeVelocity;
 
     // Bark
@@ -42,10 +48,20 @@ public class Player : MonoBehaviour
     private float BiteCooldownRemaining;
     private bool CanBite;
     
+    // Human Interaction
+    public bool CanInteract;
+
     // Human Command
     public float CommandRange;
     public LayerMask CommandLayerMask;
     private Human Human;
+
+    private Vector3 targetVelocity;
+    private float fallSpeed;
+    private bool isJumping = false;
+    
+    public event Action OnBark;
+    public event Action OnBite;
 
     // real shit?
     void Awake() 
@@ -65,22 +81,62 @@ public class Player : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Human = Human.Instance;
+        CanInteract = false;
+        if (PauseMenu.Instance) {
+            SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
+            MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateMovement();
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateLook();
-        UpdateMovement();
         UpdateCooldown();
+        MovementControls();
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
         if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
             Bite();
         if (Input.GetKeyDown(KeyCode.Mouse2))
             CommandHuman();
+        if (Input.GetKeyDown(KeyCode.F) && CanInteract)
+            Interact();
+        Model.position = Vector3.Lerp(Model.position, transform.position, 30 * Time.deltaTime);
+        Model.rotation = transform.rotation;
     }
 
+    void MovementControls()
+    {
+        fallSpeed = PlayerRigidBody.velocity.y;
+        targetVelocity = Vector3.zero;
+        if(Input.GetKey(KeyCode.W))
+            targetVelocity += transform.forward;
+        if(Input.GetKey(KeyCode.S))
+            targetVelocity -= transform.forward;
+        if(Input.GetKey(KeyCode.A))
+            targetVelocity -= transform.right;
+        if(Input.GetKey(KeyCode.D))
+            targetVelocity += transform.right;
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
+        {
+            fallSpeed = JumpSpeed;
+            isJumping = true;
+        }
+        targetVelocity.Normalize();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
+        {
+            CanDash = false;
+            DashCooldownRemaining = DashCoolDown;
+            StrafeVelocity += targetVelocity * DashSpeed;
+        }
+    }
+    
     // Called every frame to update player look
     void UpdateLook()
     {
@@ -95,22 +151,12 @@ public class Player : MonoBehaviour
     // Called every frame to update player movement
     void UpdateMovement()
     {
-        float fallSpeed = PlayerRigidBody.velocity.y;
-        Vector3 targetVelocity = Vector3.zero;
-        if(Input.GetKey(KeyCode.W))
-            targetVelocity += transform.forward;
-        if(Input.GetKey(KeyCode.S))
-            targetVelocity -= transform.forward;
-        if(Input.GetKey(KeyCode.A))
-            targetVelocity -= transform.right;
-        if(Input.GetKey(KeyCode.D))
-            targetVelocity += transform.right;
-        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
+        fallSpeed = PlayerRigidBody.velocity.y;
+        if (isJumping)
         {
             fallSpeed = JumpSpeed;
-            CanJump = false;
+            isJumping = false;
         }
-        targetVelocity.Normalize();
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 
     }
@@ -136,20 +182,30 @@ public class Player : MonoBehaviour
                 BiteCooldownRemaining = 0;
             }
         }
+        if (!CanDash)
+        {
+            DashCooldownRemaining -= Time.deltaTime;
+            if (DashCooldownRemaining <= 0)
+            {
+                CanDash = true;
+                DashCooldownRemaining = 0;
+            }
+        }
     }
 
     // Called to bark
     void Bark()
     {
         Debug.Log("Bark");
-        RaycastHit hit;
-        if (Physics.SphereCast(MouthPosition.position, BarkRadius, MouthPosition.forward, out hit, BarkRange))
+        RaycastHit[] hits = Physics.SphereCastAll(MouthPosition.position, BarkRadius, MouthPosition.forward, BarkRange);
+        foreach (RaycastHit hit in hits)
         {
             EnemyBase enemy = hit.transform.GetComponent<EnemyBase>();
             if (enemy)
                 enemy.TakeDamage(BarkDamage);
         }
-        CanBark = true;
+        OnBark?.Invoke();
+        CanBark = true; 
         BarkCooldownRemaining = BarkCooldown;
     }
 
@@ -164,6 +220,7 @@ public class Player : MonoBehaviour
             if (enemy)
                 enemy.TakeDamage(BiteDamage);
         }
+        OnBite?.Invoke();
         CanBite = true;
         BiteCooldownRemaining = BiteCooldown;
     }
@@ -178,8 +235,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Interact()
+    {
+        Human.Interact();
+    }
+
     public void AddHealth(int HealAmount)
     {
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + HealAmount);
+    }
+
+    public void SetDogVision(bool isOn) {
+        if (PlayerCamera.GetComponent<DogVisionPostProcess>()) {
+            PlayerCamera.GetComponent<DogVisionPostProcess>().enabled = isOn;
+        }
     }
 }

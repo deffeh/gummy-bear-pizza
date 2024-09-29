@@ -10,6 +10,7 @@ public class TitleScreen : MonoBehaviour
     public Button CreditsButton;
     public Button ExitButton;
     public CreditsMenu Credits;
+    public GameObject Vacumn;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,8 @@ public class TitleScreen : MonoBehaviour
     }
 
     private void PlayGame() {
-
+        Vacumn.SetActive(true);
+        LoadingScreen.Instance.LoadNewScene("DifficultySelection");
     }
 
 
