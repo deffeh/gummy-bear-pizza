@@ -477,6 +477,7 @@ MonoBehaviour:
   CurrentHealth: 100
   MaxHealth: 100
   Model: {fileID: 6112232232531288539}
+  CurrentState: 0
   MouseSensitivity: 500
   MovementSpeed: 10
   AccelerationSpeed: 5
@@ -489,6 +490,7 @@ MonoBehaviour:
   BarkRadius: 2
   BarkCooldown: 0.5
   MaxBarkAmmo: 5
+  ReloadTimeoutTime: 1
   BiteDamage: 25
   BiteRange: 0.5
   BiteRadius: 0.5

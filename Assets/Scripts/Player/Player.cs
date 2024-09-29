@@ -6,6 +6,12 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
+public enum PlayerState
+{
+    Normal,
+    Reloading
+}
+
 public class Player : MonoBehaviour
 {
 
@@ -16,6 +22,7 @@ public class Player : MonoBehaviour
     public int CurrentHealth;
     public int MaxHealth;
     public Transform Model;
+    public PlayerState CurrentState;
 
     // Look
     public float MouseSensitivity;
@@ -41,6 +48,7 @@ public class Player : MonoBehaviour
     private bool CanBark;
     public int MaxBarkAmmo;
     private int BarkAmmo;
+    public float ReloadTimeoutTime;
 
     // Bite
     public int BiteDamage;
@@ -95,6 +103,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        CurrentState = PlayerState.Normal;
         CurrentHealth = MaxHealth;
         BarkAmmo = MaxBarkAmmo;
         Human = Human.Instance;
@@ -114,15 +123,18 @@ public class Player : MonoBehaviour
     {
         UpdateLook();
         UpdateCooldown();
-        MovementControls();
-        if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
-            Bark();
-        if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
-            Bite();
-        if (Input.GetKeyDown(KeyCode.Mouse2))
-            CommandHuman();
-        if (Input.GetKeyDown(KeyCode.R) && CanReload)
-            BeginReload();
+        if (CurrentState != PlayerState.Reloading)
+        {
+            MovementControls();
+            if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
+                Bark();
+            if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
+                Bite();
+            if (Input.GetKeyDown(KeyCode.Mouse2))
+                CommandHuman();
+            if (Input.GetKeyDown(KeyCode.R) && CanReload)
+                BeginReload();
+        }
         Model.position = Vector3.Lerp(Model.position, transform.position, 30 * Time.deltaTime);
         Model.rotation = transform.rotation;
     }
@@ -302,6 +314,14 @@ public class Player : MonoBehaviour
     {
         BarkAmmo = MaxBarkAmmo;
         Human.CurrentState = HumanState.Idle;
+        CurrentState = PlayerState.Reloading;
+        StartCoroutine(ReloadTimeout());
+    }
+
+    private IEnumerator ReloadTimeout()
+    {
+        yield return new WaitForSeconds(ReloadTimeoutTime);
+        CurrentState = PlayerState.Normal;
     }
 
     public void AddHealth(int HealAmount)
