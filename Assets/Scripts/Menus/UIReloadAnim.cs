@@ -9,7 +9,9 @@ public class UIReloadAnim : MonoBehaviour
 {
     public TMP_Text reloadText;
     public Image barFill;
-    public void Show() {
+    public void Show()
+    {
+        ArmAnimation.PlayAnimation();
         barFill.fillAmount = 0;
         reloadText.text = "Reloading";
         gameObject.SetActive(true);
