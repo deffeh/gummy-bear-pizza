@@ -59,16 +59,18 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6267157262895107356, guid: f923875a4d471ad4b9b22364f1bde543, type: 3}
   NavAgent: {fileID: 2158375174782871251}
   player: {fileID: 0}
+  human: {fileID: 0}
   rb: {fileID: 1925338825689528150}
+  Damage: 5
   Speed: 3
   projectileSpeed: 8
   projectileSpawnDistFromPlayer: 0.5
-  AttackCooldown: 2
+  AttackCooldownLength: 2
   MaxAttackRange: 15
   AggressionRange: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 83
   audiosrc: {fileID: 1181677721631318497}
 --- !u!54 &1925338825689528150
 Rigidbody:
