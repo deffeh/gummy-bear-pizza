@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
     public LayerMask CommandLayerMask;
     private Human Human;
 
+    private Vector3 targetVelocity;
+    private float fallSpeed;
+    private bool isJumping = false;
+    
     public event Action OnBark;
     public event Action OnBite;
 
@@ -94,6 +98,7 @@ public class Player : MonoBehaviour
     {
         UpdateLook();
         UpdateCooldown();
+        MovementControls();
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
         if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
@@ -106,6 +111,32 @@ public class Player : MonoBehaviour
         Model.rotation = transform.rotation;
     }
 
+    void MovementControls()
+    {
+        fallSpeed = PlayerRigidBody.velocity.y;
+        targetVelocity = Vector3.zero;
+        if(Input.GetKey(KeyCode.W))
+            targetVelocity += transform.forward;
+        if(Input.GetKey(KeyCode.S))
+            targetVelocity -= transform.forward;
+        if(Input.GetKey(KeyCode.A))
+            targetVelocity -= transform.right;
+        if(Input.GetKey(KeyCode.D))
+            targetVelocity += transform.right;
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
+        {
+            fallSpeed = JumpSpeed;
+            isJumping = true;
+        }
+        targetVelocity.Normalize();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
+        {
+            CanDash = false;
+            DashCooldownRemaining = DashCoolDown;
+            StrafeVelocity += targetVelocity * DashSpeed;
+        }
+    }
+    
     // Called every frame to update player look
     void UpdateLook()
     {
@@ -120,24 +151,11 @@ public class Player : MonoBehaviour
     // Called every frame to update player movement
     void UpdateMovement()
     {
-        float fallSpeed = PlayerRigidBody.velocity.y;
-        Vector3 targetVelocity = Vector3.zero;
-        if(Input.GetKey(KeyCode.W))
-            targetVelocity += transform.forward;
-        if(Input.GetKey(KeyCode.S))
-            targetVelocity -= transform.forward;
-        if(Input.GetKey(KeyCode.A))
-            targetVelocity -= transform.right;
-        if(Input.GetKey(KeyCode.D))
-            targetVelocity += transform.right;
-        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
-            fallSpeed = JumpSpeed;
-        targetVelocity.Normalize();
-        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
+        fallSpeed = PlayerRigidBody.velocity.y;
+        if (isJumping)
         {
-            CanDash = false;
-            DashCooldownRemaining = DashCoolDown;
-            StrafeVelocity += targetVelocity * DashSpeed;
+            fallSpeed = JumpSpeed;
+            isJumping = false;
         }
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 
