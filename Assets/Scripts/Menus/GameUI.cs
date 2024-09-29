@@ -8,11 +8,12 @@ public class GameUI : MonoBehaviour
 {
     public TMP_Text DogHealthText;
     public TMP_Text HumanHealthText;
-    public TMP_Text NumTreatsText;
-    public TMP_Text NumSandwichesText;
     public Image DogPic;
     public Image HumanPic; 
+    public TMP_Text DogAmmoText;
     public TMP_Text Dog_NameText;
+    public TMP_Text Dog_NameAmmoText;
+    public UIReloadAnim reloadAnim;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,8 @@ public class GameUI : MonoBehaviour
         if (play) {
             play.OnHealed += DogHealed;
             play.OnTakeDamage += DogDamaged;
+            play.OnReload += OnDogReload;
+            play.OnAmmoChanged += OnAmmoChanged;
             DogHealthText.text = play.CurrentHealth.ToString();
         }
         if (hum) {
@@ -30,6 +33,7 @@ public class GameUI : MonoBehaviour
         }
         if (PersistData.Instance) {
             Dog_NameText.text = PersistData.Instance.DogName + " Energy";
+            Dog_NameAmmoText.text = PersistData.Instance.DogName + " Ammo";
         }
 
     }
@@ -40,6 +44,8 @@ public class GameUI : MonoBehaviour
         if (play) {
             play.OnHealed -= DogHealed;
             play.OnTakeDamage -= DogDamaged;
+            play.OnReload -= OnDogReload;
+            play.OnAmmoChanged -= OnAmmoChanged;
         }
         if (hum) {
             hum.OnHealed -= HumanHealed;
@@ -53,6 +59,14 @@ public class GameUI : MonoBehaviour
 
     private void DogDamaged(int hp) {
         DogHealthText.text = hp.ToString();
+    }
+
+    private void OnDogReload() {
+        reloadAnim.Show();
+    }
+    
+    private void OnAmmoChanged(int numAmmo) {
+        DogAmmoText.text = numAmmo.ToString();
     }
 
     private void HumanHealed(int hp) {
