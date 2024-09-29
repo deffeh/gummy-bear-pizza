@@ -489,7 +489,7 @@ MonoBehaviour:
   BarkDamage: 10
   BarkRange: 15
   BarkRadius: 5
-  BarkCooldown: 1
+  BarkCooldown: 0.5
   MaxBarkAmmo: 5
   ReloadTimeoutTime: 1
   BiteDamage: 25
