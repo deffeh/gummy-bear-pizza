@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     // Movement
     public float MovementSpeed;
     public float AccelerationSpeed;
+    public float MinAccelerationSpeed;
+    public float AccelerateT = 1;
     public float JumpSpeed;
     public bool CanJump;
     public float DashSpeed;
@@ -128,6 +130,8 @@ public class Player : MonoBehaviour
         UpdateLook();
         UpdateCooldown();
         MovementControls();
+        AccelerateT += Time.deltaTime * .5f;
+        AccelerateT = Mathf.Clamp01(AccelerateT);
         if (CurrentState != PlayerState.Reloading)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
@@ -213,7 +217,9 @@ public class Player : MonoBehaviour
             StrafeVelocity += targetVelocity * DashSpeed;
             isDashing = false;
         }
-        StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
+
+        StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed,
+            Mathf.Lerp(MinAccelerationSpeed, AccelerationSpeed, AccelerateT) * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 
     }
 
@@ -302,8 +308,9 @@ public class Player : MonoBehaviour
     public void OnHit(int damage, Vector3 HitPos)
     {
         OnHit(damage);
+        AccelerateT = 0;
 
-        StrafeVelocity += (transform.position - HitPos).normalized * 30;
+        StrafeVelocity += (transform.position - HitPos).normalized * 10;
     }
 
     void CommandHuman()

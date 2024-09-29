@@ -71,9 +71,12 @@ public abstract class EnemyBase : MonoBehaviour
             CameraShake.Shake(1);
         }
 
-        if (Random.Range(0, 10) == 0)
-            Instantiate(Random.Range(0,2) == 0 ? Sandwich : DogTreat, transform.position, Quaternion.identity, null);
-
+        if (DogTreat && Sandwich)
+        {
+            if (Random.Range(0, 10) == 0)
+                Instantiate(Random.Range(0,2) == 0 ? Sandwich : DogTreat, transform.position, Quaternion.identity, null);
+        }
+      
         if (!CurrentRoot)
             Destroy(transform.root.gameObject);
         else
