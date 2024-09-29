@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public Transform Model;
     public PlayerState CurrentState;
     public ParticleSystem SpeedLines;
+    public ParticleSystem Hearts;
     
     // Look
     public float MouseSensitivity;
@@ -126,9 +127,9 @@ public class Player : MonoBehaviour
     {
         UpdateLook();
         UpdateCooldown();
+        MovementControls();
         if (CurrentState != PlayerState.Reloading)
         {
-            MovementControls();
             if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
                 Bark();
             if (Input.GetKeyDown(KeyCode.Mouse1) && CanBite)
@@ -146,6 +147,8 @@ public class Player : MonoBehaviour
     {
         fallSpeed = PlayerRigidBody.velocity.y;
         targetVelocity = Vector3.zero;
+        if (CurrentState == PlayerState.Reloading) return;
+        
         if(Input.GetKey(KeyCode.W))
             targetVelocity += transform.forward;
         if(Input.GetKey(KeyCode.S))
@@ -164,6 +167,7 @@ public class Player : MonoBehaviour
         targetVelocity.Normalize();
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
         {
+            DashCooldownRemaining = DashCoolDown;
             CanDash = false;
             isDashing = true;
             DashSrc.Play();
@@ -206,7 +210,6 @@ public class Player : MonoBehaviour
 
         if (isDashing)
         {
-            DashCooldownRemaining = DashCoolDown;
             StrafeVelocity += targetVelocity * DashSpeed;
             isDashing = false;
         }
@@ -324,6 +327,7 @@ public class Player : MonoBehaviour
 
     public void Reload()
     {
+        Hearts.Play();
         OnReload?.Invoke();
         BarkAmmo = MaxBarkAmmo;
         OnAmmoChanged?.Invoke(BarkAmmo);

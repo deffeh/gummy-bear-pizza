@@ -56,6 +56,8 @@ MonoBehaviour:
   DeathEffect: {fileID: 8521852251528875114, guid: e0e30ed89133ab749872df63229debcb, type: 3}
   DamageTakenSFX: {fileID: 5444180357857112602}
   CurrentRoot: {fileID: 0}
+  Sandwich: {fileID: 797493815452960240, guid: c0c23625621989f49a9a00d95c0f40be, type: 3}
+  DogTreat: {fileID: 410135587662733373, guid: 8e4d73cf39e67e0468a6f8d5ee6680ca, type: 3}
   projectilePrefab: {fileID: 6267157262895107356, guid: f923875a4d471ad4b9b22364f1bde543, type: 3}
   NavAgent: {fileID: 2158375174782871251}
   player: {fileID: 0}
@@ -118,7 +120,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.07375
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!135 &4543131045055576328

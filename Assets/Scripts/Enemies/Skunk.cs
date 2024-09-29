@@ -62,7 +62,6 @@ public class Skunk : EnemyBase
         animator = GetComponentInChildren<Animator>();
         NavAgent.speed = Speed;
         curState = SkunkState.Idle;
-        SetToActive();
     }
 
     // Update is called once per frame

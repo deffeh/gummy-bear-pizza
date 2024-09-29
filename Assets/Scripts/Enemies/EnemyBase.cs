@@ -13,6 +13,9 @@ public abstract class EnemyBase : MonoBehaviour
     public AudioSource DamageTakenSFX;
     public GameObject CurrentRoot;
 
+    public GameObject Sandwich;
+    public GameObject DogTreat;
+
     private Material mat;
     // Start is called before the first frame update
     protected void Start()
@@ -67,6 +70,9 @@ public abstract class EnemyBase : MonoBehaviour
             Instantiate(DeathEffect, transform.position, Quaternion.identity, null);
             CameraShake.Shake(1);
         }
+
+        if (Random.Range(0, 10) == 0)
+            Instantiate(Random.Range(0,2) == 0 ? Sandwich : DogTreat, transform.position, Quaternion.identity, null);
 
         if (!CurrentRoot)
             Destroy(transform.root.gameObject);
