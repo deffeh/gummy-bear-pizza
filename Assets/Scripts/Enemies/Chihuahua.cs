@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,8 @@ public class Chihuahua : EnemyBase
 {
     [Header("Components")]
     [HideInInspector] public Rigidbody player;
+    [HideInInspector] public Rigidbody human;
+
     public NavMeshAgent NavAgent;
     public Rigidbody rb;
     [Header("Stats")]
@@ -24,7 +27,7 @@ public class Chihuahua : EnemyBase
     public int Damage = 10;
     [Header("State Stuff")]
     public ChihuahuaState curState;
-
+    public float PlayerTriggerDist = 1f;
     public float BiteTriggerDist = 1f;
     public float BiteRecoveryDuration = 0.5f;
     public float BiteDist = 5f;
@@ -36,12 +39,23 @@ public class Chihuahua : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
+        if (PersistData.Instance) {
+            Difficulty currDiff = PersistData.Instance.CurrDifficulty;
+            if (currDiff == Difficulty.Easy) {
+                MaxHp = 1;
+                Damage /= 2;
+            } else if (currDiff == Difficulty.Helldogger) {
+                MaxHp *= 2;
+                Damage = (int) ((float)Damage * 1.5f); //raw dog
+            }
+        }
         base.Start();
         player = Player.Instance.GetComponent<Rigidbody>();
+        human = Human.Instance.GetComponent<Rigidbody>();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         NavAgent.speed = Speed;
-        //curState = ChihuahuaState.Idle;
+        curState = ChihuahuaState.Idle;
         SetToActive();
     }
 
@@ -50,6 +64,7 @@ public class Chihuahua : EnemyBase
     {
         switch (curState) {
             case ChihuahuaState.Idle:
+            SearchForPlayer();
             break;
 
             case ChihuahuaState.Active:
@@ -64,17 +79,27 @@ public class Chihuahua : EnemyBase
         }
     }
 
+     private void SearchForPlayer() {
+        float distToPlayer = Vector3.Distance(rb.position, player.position);
+        float distToHuman = Vector3.Distance(rb.position, human.position);
+        if (distToPlayer < PlayerTriggerDist || distToHuman < PlayerTriggerDist) {
+            SetToActive();
+        }
+    }
+
     public void SetToActive() {
         UpdateState(ChihuahuaState.Active);
     }
 
-    private void ActiveState() {
+      private void ActiveState() {
         float distToPlayer = Vector3.Distance(rb.position, player.position);
-
-        if (distToPlayer > BiteTriggerDist)
-        {
-            rb.rotation.SetLookRotation(player.position);
-            NavAgent.destination = player.position;
+        float distToHuman = Vector3.Distance(rb.position, human.position);
+        float dist = Math.Min(distToPlayer, distToHuman);
+        Rigidbody tgt = distToPlayer < distToHuman ? player : human;
+        if (dist > BiteTriggerDist)
+        {   
+            rb.rotation.SetLookRotation(tgt.position);
+            NavAgent.destination = tgt.position;
         } 
         else 
         {
@@ -86,7 +111,7 @@ public class Chihuahua : EnemyBase
         var seq = DOTween.Sequence();
         seq.AppendInterval(BiteRecoveryDuration);
         seq.OnComplete(() => {
-            UpdateState(ChihuahuaState.Active);
+            UpdateState(ChihuahuaState.Idle);
         });
         seq.Play();
     }

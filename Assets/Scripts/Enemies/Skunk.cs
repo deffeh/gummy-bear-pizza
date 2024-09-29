@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ public class Skunk : EnemyBase
 {
     [Header("Components")]
     [HideInInspector] public Rigidbody player;
+    [HideInInspector] public Rigidbody human;
     public NavMeshAgent NavAgent;
     public Rigidbody rb;
     [Header("Stats")]
@@ -25,6 +27,7 @@ public class Skunk : EnemyBase
     public int Damage = 20;
     [Header("State Stuff")]
     public SkunkState curState;
+    public float PlayerTriggerDist = 10f;
     public float FartTriggerDist = 30f;
     public float FartChargeDuration = 3f;
     public float FartRecoveryDuration = 3f;
@@ -40,12 +43,23 @@ public class Skunk : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
+        if (PersistData.Instance) {
+            Difficulty currDiff = PersistData.Instance.CurrDifficulty;
+            if (currDiff == Difficulty.Easy) {
+                MaxHp = 1;
+                Damage /= 2;
+            } else if (currDiff == Difficulty.Helldogger) {
+                MaxHp *= 2;
+                Damage = (int) ((float)Damage * 1.5f); //raw dog
+            }
+        }
         base.Start();
         player = Player.Instance.GetComponent<Rigidbody>();
+        human = Human.Instance.GetComponent<Rigidbody>();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         NavAgent.speed = Speed;
-        // curState = SkunkState.Idle;
+        curState = SkunkState.Idle;
         SetToActive();
     }
 
@@ -54,6 +68,7 @@ public class Skunk : EnemyBase
     {
         switch (curState) {
             case SkunkState.Idle:
+            SearchForPlayer();
             break;
 
             case SkunkState.Active:
@@ -72,16 +87,27 @@ public class Skunk : EnemyBase
         }
     }
 
+    private void SearchForPlayer() {
+        float distToPlayer = Vector3.Distance(rb.position, player.position);
+        float distToHuman = Vector3.Distance(rb.position, human.position);
+        if (distToPlayer < PlayerTriggerDist || distToHuman < PlayerTriggerDist) {
+            SetToActive();
+        }
+    }
+
     public void SetToActive() {
         UpdateState(SkunkState.Active);
     }
 
     private void ActiveState() {
         float distToPlayer = Vector3.Distance(rb.position, player.position);
-        if (distToPlayer > FartTriggerDist)
-        {
-            rb.rotation.SetLookRotation(player.position);
-            NavAgent.destination = player.position;
+        float distToHuman = Vector3.Distance(rb.position, human.position);
+        float dist = Math.Min(distToPlayer, distToHuman);
+        Rigidbody tgt = distToPlayer < distToHuman ? player : human;
+        if (dist > FartTriggerDist)
+        {   
+            rb.rotation.SetLookRotation(tgt.position);
+            NavAgent.destination = tgt.position;
         } 
         else 
         {
@@ -110,7 +136,7 @@ public class Skunk : EnemyBase
         seq.AppendCallback(() => {
             Debug.Log("Recovery");
             Sprite.material.SetFloat("_Brightness", 1f);
-            UpdateState(SkunkState.Active);
+            UpdateState(SkunkState.Idle);
         });
         seq.Play();
     }
@@ -150,7 +176,7 @@ public class Skunk : EnemyBase
         }
 
         GameObject cloud = Instantiate(fartCloud.gameObject, startPos, Quaternion.identity);
-        var clip = farts[Random.Range(0, farts.Count)];
+        var clip = farts[UnityEngine.Random.Range(0, farts.Count)];
         cloud.GetComponent<AudioSource>().clip = clip;
         cloud.GetComponent<AudioSource>().Play();
         UpdateState(SkunkState.FartRecovery);

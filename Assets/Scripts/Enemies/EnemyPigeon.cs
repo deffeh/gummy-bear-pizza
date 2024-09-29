@@ -20,6 +20,14 @@ public class EnemyPigeon : EnemyBase
     // Start is called before the first frame update
     protected void Start()
     {
+        if (PersistData.Instance) {
+            Difficulty currDiff = PersistData.Instance.CurrDifficulty;
+            if (currDiff == Difficulty.Easy) {
+                MaxHp = 1;
+            } else if (currDiff == Difficulty.Helldogger) {
+                MaxHp *= 2;
+            }
+        }
         base.Start();
         CurState = PigeonState.Idle;
         rb = GetComponent<Rigidbody>();
