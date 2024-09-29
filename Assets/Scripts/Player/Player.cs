@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Transform MouthPosition;
     public int CurrentHealth;
     public int MaxHealth;
+    public Transform Model;
 
     // Look
     public float MouseSensitivity;
@@ -83,11 +84,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        UpdateMovement();
+    }
+
     // Update is called once per frame
     void Update()
     {
         UpdateLook();
-        UpdateMovement();
         UpdateCooldown();
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanBark)
             Bark();
@@ -97,6 +102,8 @@ public class Player : MonoBehaviour
             CommandHuman();
         if (Input.GetKeyDown(KeyCode.F) && CanInteract)
             Interact();
+        Model.position = Vector3.Lerp(Model.position, transform.position, 30 * Time.deltaTime);
+        Model.rotation = transform.rotation;
     }
 
     // Called every frame to update player look
