@@ -164,6 +164,7 @@ public class Player : MonoBehaviour
         targetVelocity.Normalize();
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
         {
+            DashCooldownRemaining = DashCoolDown;
             CanDash = false;
             isDashing = true;
             DashSrc.Play();
@@ -206,7 +207,6 @@ public class Player : MonoBehaviour
 
         if (isDashing)
         {
-            DashCooldownRemaining = DashCoolDown;
             StrafeVelocity += targetVelocity * DashSpeed;
             isDashing = false;
         }
