@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
     public event Action OnReload;
     public event Action<int> OnHealed;
     public event Action<int> OnTakeDamage;
+    public event Action<int> OnAmmoChanged;
 
     //sfx
     public AudioSource walkSrc;
@@ -251,6 +252,7 @@ public class Player : MonoBehaviour
         if (BarkAmmo <= 0)
             return;
         --BarkAmmo;
+        OnAmmoChanged?.Invoke(BarkAmmo);
         RaycastHit[] hits = Physics.SphereCastAll(MouthPosition.position, BarkRadius, MouthPosition.forward, BarkRange);
         foreach (RaycastHit hit in hits)
         {
@@ -324,6 +326,7 @@ public class Player : MonoBehaviour
     {
         OnReload?.Invoke();
         BarkAmmo = MaxBarkAmmo;
+        OnAmmoChanged?.Invoke(BarkAmmo);
         Human.CurrentState = HumanState.Idle;
         CurrentState = PlayerState.Reloading;
         StartCoroutine(ReloadTimeout());
