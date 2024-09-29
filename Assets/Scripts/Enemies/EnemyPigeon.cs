@@ -45,7 +45,7 @@ public class EnemyPigeon : EnemyBase
 
     private IEnumerator FireProjectile()
     {
-        yield return new WaitForSeconds(Random.Range(-5f, 5f));
+        yield return new WaitForSeconds(Random.Range(0f, 5f));
 
         float t = 0;
         while (true)
