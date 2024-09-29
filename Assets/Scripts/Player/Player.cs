@@ -260,14 +260,13 @@ public class Player : MonoBehaviour
 
     public void OnHit(int damage) {
         CurrentHealth = Math.Max(0, CurrentHealth - damage);
-        if (CurrentHealth == 0) {
-            //unborn yourself
-        } else {
-
-        }
         HurtSrc.Play();
         OnTakeDamage?.Invoke(CurrentHealth);
-
+        if (CurrentHealth == 0) {
+            //unborn yourself
+            PauseMenu.Instance.Die();
+            return;
+        }
     }
     
     public void OnHit(int damage, Vector3 HitPos)
