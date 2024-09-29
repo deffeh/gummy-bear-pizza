@@ -491,10 +491,11 @@ MonoBehaviour:
   DashSpeed: 25
   DashCoolDown: 1
   BarkDamage: 1
-  BarkRange: 15
+  BarkRange: 7
   BarkRadius: 5
   BarkCooldown: 0.5
-  MaxBarkAmmo: 5
+  MaxBarkAmmo: 8
+  BarkAmmo: 0
   ReloadTimeoutTime: 1
   BiteDamage: 5
   BiteRange: 1.5
