@@ -26,7 +26,7 @@ public class AcornProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void SelfDestruct()
@@ -48,14 +48,13 @@ public class AcornProjectile : MonoBehaviour
         Player player = other.GetComponent<Player>();
         if (player)
         {
-            // player take damage
+            player.OnHit(5);
         }
-        
+
         Human human = other.GetComponent<Human>();
         if (human)
         {
-            // human takes damange
-            
+            human.OnHit(5);
         }
 
         Squirrel self = other.GetComponent<Squirrel>();
