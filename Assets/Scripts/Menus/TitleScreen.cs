@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class TitleScreen : MonoBehaviour
 {
     public GameObject Title;
+    public GameObject SubTitle;
     public Transform TitleAnimStartPos;
+    public Transform SubtitleAnimStartPos;
     public Transform ButtonAnimStartPos;
     public Button PlayButton;
     public Button SettingsButton;
@@ -21,7 +23,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (PauseMenu.Instance) {
             PauseMenu.Instance.AllowPause = false;
-            PauseMenu.Instance.amDying = true;
+            PauseMenu.Instance.amDying = false;
         }
 
         PlayButton.onClick.AddListener(PlayGame);
@@ -40,14 +42,18 @@ public class TitleScreen : MonoBehaviour
     private void StartAnim() {
         var ogTitlePos = Title.transform.position;
         float ogButtonX = PlayButton.transform.position.x;
+        float ogSubtitleX = SubTitle.transform.position.x;
 
-        Title.transform.position = TitleAnimStartPos.position;
+        Title.transform.position = new Vector2(Title.transform.position.x, TitleAnimStartPos.position.y);
+        SubTitle.transform.position = new Vector2(SubtitleAnimStartPos.position.x, SubTitle.transform.position.y);
+
         PlayButton.transform.position = new Vector2(ButtonAnimStartPos.position.x, PlayButton.transform.position.y);
         SettingsButton.transform.position = new Vector2(ButtonAnimStartPos.position.x, SettingsButton.transform.position.y);
         CreditsButton.transform.position = new Vector2(ButtonAnimStartPos.position.x, CreditsButton.transform.position.y);
         ExitButton.transform.position = new Vector2(ButtonAnimStartPos.position.x, ExitButton.transform.position.y);
 
         Title.GetComponent<CanvasGroup>().alpha = 0;
+        SubTitle.GetComponent<CanvasGroup>().alpha = 0;
         PlayButton.GetComponent<CanvasGroup>().alpha = 0;
         SettingsButton.GetComponent<CanvasGroup>().alpha = 0;
         CreditsButton.GetComponent<CanvasGroup>().alpha = 0;
@@ -56,6 +62,8 @@ public class TitleScreen : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.Append(Title.transform.DOMoveY(ogTitlePos.y, 3f));
         seq.Join(Title.GetComponent<CanvasGroup>().DOFade(1, 3f));
+        seq.Insert(1.5f, SubTitle.transform.DOMoveX(ogSubtitleX, 2f));
+        seq.Insert(1.5f, SubTitle.GetComponent<CanvasGroup>().DOFade(1, 1.5f));
         seq.Insert(1f, PlayButton.GetComponent<CanvasGroup>().DOFade(1, 1f));
         seq.Insert(1f, PlayButton.transform.DOMoveX(ogButtonX, 1f));
         seq.Insert(1.5f, SettingsButton.GetComponent<CanvasGroup>().DOFade(1, 1f));
