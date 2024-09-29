@@ -13,7 +13,7 @@ Shader "Hidden/SpriteDefault"
         Tags { "Queue" = "Transparent" "RenderType"="Transparent" }
 
         // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+        Cull Off ZWrite Off
 
         LOD 100
         Blend SrcAlpha OneMinusSrcAlpha
