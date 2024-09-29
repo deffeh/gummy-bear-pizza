@@ -71,6 +71,7 @@ public class IntroSequence : MonoBehaviour
         ending = true;
         GameCanvas.gameObject.SetActive(false);
         SubtitleText.gameObject.SetActive(false);
+        PauseMenu.Instance.amDying = true;
         PauseMenu.Instance.AllowPause = false;
         ObjectiveText.text = "";
         gameObject.SetActive(true);
