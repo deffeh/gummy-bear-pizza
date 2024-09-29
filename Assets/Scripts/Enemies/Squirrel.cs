@@ -29,6 +29,7 @@ public class Squirrel : EnemyBase
     private bool HasLineOfSight = false;
     private float CurCooldown = 0f;
     private Animator animator;
+    public AudioSource audiosrc;
 
 
     void Start()
@@ -155,6 +156,7 @@ public class Squirrel : EnemyBase
 
     private void ThrowAcorn()
     {
+        audiosrc.Play();
         Vector3 shootDir = (player.position - new Vector3(0f, 0.3f, 0f) - rb.position).normalized;
         Vector3 spawnPos = rb.position + new Vector3(0f, 0.5f, 0f);
         

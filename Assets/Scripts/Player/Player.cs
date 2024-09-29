@@ -66,6 +66,15 @@ public class Player : MonoBehaviour
     public event Action<int> OnHealed;
     public event Action<int> OnTakeDamage;
 
+    //sfx
+    public AudioSource walkSrc;
+    public AudioSource BarkSrc;
+    public AudioSource BiteSrc;
+    public AudioSource JumpSrc;
+    public AudioSource DashSrc;
+    public AudioSource HurtSrc;
+    public AudioSource HealSrc;
+    public List<AudioClip> barks;
 
     // real shit?
     void Awake() 
@@ -133,12 +142,21 @@ public class Player : MonoBehaviour
             fallSpeed = JumpSpeed;
             isJumping = true;
             CanJump = false;
+            JumpSrc.Play();
         }
         targetVelocity.Normalize();
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
         {
             CanDash = false;
             isDashing = true;
+            DashSrc.Play();
+        }
+        if (Vector2.Distance(targetVelocity, Vector2.zero) < 0.001) {
+            if (walkSrc.isPlaying) {
+                walkSrc.Stop();
+            }
+        } else if (!walkSrc.isPlaying) {
+            walkSrc.Play();
         }
     }
     
@@ -208,7 +226,6 @@ public class Player : MonoBehaviour
     // Called to bark
     void Bark()
     {
-        Debug.Log("Bark");
         RaycastHit[] hits = Physics.SphereCastAll(MouthPosition.position, BarkRadius, MouthPosition.forward, BarkRange);
         foreach (RaycastHit hit in hits)
         {
@@ -217,6 +234,9 @@ public class Player : MonoBehaviour
                 enemy.TakeDamage(BarkDamage);
         }
         OnBark?.Invoke();
+        int randomId = UnityEngine.Random.Range(0, barks.Count);
+        BarkSrc.clip = barks[randomId];
+        BarkSrc.Play();
         CanBark = true; 
         BarkCooldownRemaining = BarkCooldown;
     }
@@ -233,6 +253,7 @@ public class Player : MonoBehaviour
                 enemy.TakeDamage(BiteDamage);
         }
         OnBite?.Invoke();
+        BiteSrc.Play();
         CanBite = true;
         BiteCooldownRemaining = BiteCooldown;
     }
@@ -244,6 +265,7 @@ public class Player : MonoBehaviour
         } else {
 
         }
+        HurtSrc.Play();
         OnTakeDamage?.Invoke(CurrentHealth);
 
     }
@@ -273,6 +295,7 @@ public class Player : MonoBehaviour
     public void AddHealth(int HealAmount)
     {
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + HealAmount);
+        HealSrc.Play();
         OnHealed?.Invoke(CurrentHealth);
     }
 

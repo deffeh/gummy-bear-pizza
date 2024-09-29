@@ -30,6 +30,7 @@ public class Chihuahua : EnemyBase
     public float BiteDist = 5f;
     public float BiteRadius = 5f;
     public LayerMask mask;
+    public AudioSource barksrc;
     
 
     // Start is called before the first frame update
@@ -105,6 +106,7 @@ public class Chihuahua : EnemyBase
     }
 
     private void BiteThings() {
+        barksrc.Play();
         var startPos = transform.position + transform.forward * BiteDist;
         var colls = Physics.OverlapSphere(startPos, BiteRadius, mask);
         foreach (var col in colls) {
