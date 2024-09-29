@@ -13,13 +13,10 @@ public class IntroSequence : MonoBehaviour
     public TMP_Text ObjectiveText;
     public AudioSource typeWriter;
     public AudioSource BARK;
-    public AudioSource FART;
     public AudioSource COMPLET;
     public TMP_Text SubtitleText;
-    public TMP_Text EndSubText;
     public TMP_Text CompleteText;
     public Canvas GameCanvas;
-    private bool ending = false;
 
     // Start is called before the first frame update
     void Start()
@@ -66,44 +63,4 @@ public class IntroSequence : MonoBehaviour
         seq.Play();
     }
 
-    public void EndSequence() {
-        if (ending) {return;}
-        ending = true;
-        GameCanvas.gameObject.SetActive(false);
-        SubtitleText.gameObject.SetActive(false);
-        PauseMenu.Instance.amDying = true;
-        PauseMenu.Instance.AllowPause = false;
-        ObjectiveText.text = "";
-        gameObject.SetActive(true);
-        GetComponent<AudioSource>().Stop();
-        var seq = DOTween.Sequence();
-        float initialDelay = 1.5f;
-        seq.AppendInterval(initialDelay);
-        string obj = "OBJECTIVE";
-        string curString = "";
-        float delay = initialDelay;
-        for (int i = 0; i < obj.Length; i++) {
-            curString += obj[i];
-            string temp = curString;
-            seq.InsertCallback(delay, () => {
-                ObjectiveText.text = temp;
-                typeWriter.Play();
-            });
-            delay += 0.2f;
-        }
-         seq.InsertCallback(initialDelay + 2f, () => {
-            EndSubText.gameObject.SetActive(true);
-            FART.Play();
-        });
-        seq.InsertCallback(initialDelay + 5f, () => {
-            COMPLET.Play();
-            CompleteText.gameObject.SetActive(true);
-        });
-        seq.InsertCallback(initialDelay + 10f, () => {
-            LoadingScreen.Instance.LoadNewScene("TitleScreen");
-        });
-        seq.Play();
-    }
-
-   
 }
