@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FacePlayer : MonoBehaviour
 {
+    public Transform ParentObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,12 @@ public class FacePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 UpVector = transform.root.up;
+        if (ParentObject)
+        {
+            UpVector = ParentObject.up;
+        }
         transform.rotation =
-            Quaternion.LookRotation((Camera.main.transform.position - transform.position).normalized, transform.root.up);
+            Quaternion.LookRotation((Camera.main.transform.position - transform.position).normalized, UpVector);
     }
 }
