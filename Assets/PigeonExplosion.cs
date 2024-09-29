@@ -22,7 +22,7 @@ public class PigeonExplosion : MonoBehaviour
                     otherRb.AddForce((otherRb.position - transform.position).normalized * KnockbackForce);
                     if (hit.GetComponent<Player>())
                     {
-                        hit.GetComponent<Player>().OnHit(Damage);
+                        hit.GetComponent<Player>().OnHit(Damage, transform.position);
                     }
                 }
             }
