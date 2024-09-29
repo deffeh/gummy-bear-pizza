@@ -33,7 +33,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        DamageTakenSFX.Play();
+        if(DamageTakenSFX)
+            DamageTakenSFX.Play();
         if (Sprite)
         {
             StartCoroutine(DamageAnim());
