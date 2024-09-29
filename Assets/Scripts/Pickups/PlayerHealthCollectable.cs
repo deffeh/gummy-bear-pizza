@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerHealthCollectable : CollectableBase
 {
     public int HealAmount = 10;
+    public GameObject PickupEffect;
 
     public override void Collect(Collider other)
     {
@@ -12,6 +13,10 @@ public class PlayerHealthCollectable : CollectableBase
             if(player.CurrentHealth >= player.MaxHealth) return;
             player.AddHealth(HealAmount);
             Debug.Log("Player collected health pickup");
+            if (PickupEffect)
+            {
+                Instantiate(PickupEffect, transform.position, Quaternion.identity, null);
+            }
             Destroy(gameObject);
         }
     }
