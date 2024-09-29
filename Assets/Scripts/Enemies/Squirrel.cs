@@ -67,8 +67,6 @@ public class Squirrel : EnemyBase
 
     void FixedUpdate()
     {
-        Debug.Log("Current State: " + curState.ToString() + ", Closest target: " + curTarget.name + ", Has LOS with Target: " + HasLineOfSight);
-
         switch (curState) 
         {
             case SquirrelState.Idle:
@@ -106,13 +104,8 @@ public class Squirrel : EnemyBase
     bool CheckLineOfSight()
     {
         Vector3 diff = curTarget.position - transform.position;
-        Debug.Log("Casting ray");
         if (Physics.Raycast(transform.position, diff.normalized, out RaycastHit hit, 1000f, layerMask))
         {
-            Debug.Log("hit detected");
-            Debug.Log("hitter name: " + hit.collider.name + ", hit pos: " + hit.transform.position + ", player pos: " + curTarget.position);
-            Debug.Log("collider name: " + hit.collider.name);
-
             Player collidingPlayer = hit.collider.GetComponent<Player>();
             Human collidingHuman = hit.collider.GetComponent<Human>();
 

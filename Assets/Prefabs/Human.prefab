@@ -376,8 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca6e94544d27704486bdd2dca78b392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 0
-  MaxHealth: 0
+  CurrentHealth: 250
+  MaxHealth: 250
   maxDistFromPlayer: 35
   CurrentState: 0
   HumanRigidBody: {fileID: 6249540078650686519}

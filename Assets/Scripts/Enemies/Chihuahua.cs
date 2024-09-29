@@ -58,13 +58,11 @@ public class Chihuahua : EnemyBase
         animator = GetComponentInChildren<Animator>();
         NavAgent.speed = Speed;
         curState = ChihuahuaState.Idle;
-        SetToActive();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log("Current State: " + curState);
         switch (curState) {
             case ChihuahuaState.Idle:
             SearchForPlayer();

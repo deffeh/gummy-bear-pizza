@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     private float BarkCooldownRemaining;
     private bool CanBark;
     public int MaxBarkAmmo;
-    private int BarkAmmo;
+    [HideInInspector] public int BarkAmmo;
     public float ReloadTimeoutTime;
 
     // Bite
