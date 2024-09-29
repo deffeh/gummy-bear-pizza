@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class PauseMenu : MonoBehaviour
     public SettingsMenu Settings;
     public bool isPaused = false;
     public bool AllowPause = true;
+    public GameObject dieCon;
+    public bool amDying = false;
 
     void Awake() 
     {
@@ -34,6 +37,23 @@ public class PauseMenu : MonoBehaviour
     private void GoToTitleScreen() {
         Cursor.lockState = CursorLockMode.None;
         LoadingScreen.Instance.LoadNewScene("TitleScreen");
+    }
+
+    public void Die() {
+        if (amDying) {return;}
+        amDying = true;
+        AllowPause = false;
+        dieCon.SetActive(true);
+        var seq = DOTween.Sequence();
+        seq.Append(dieCon.GetComponent<CanvasGroup>().DOFade(1, 3f));
+        seq.Append(dieCon.GetComponent<CanvasGroup>().DOFade(0, 1f));
+        seq.AppendInterval(0.5f);
+        seq.OnComplete(() => {
+            dieCon.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            LoadingScreen.Instance.LoadNewScene("TitleScreen");
+        });
+        seq.Play();
     }
 
     void Update()
