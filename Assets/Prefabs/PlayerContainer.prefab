@@ -487,15 +487,15 @@ MonoBehaviour:
   DashSpeed: 25
   DashCoolDown: 2
   BarkDamage: 10
-  BarkRange: 2
-  BarkRadius: 2
-  BarkCooldown: 0.5
+  BarkRange: 15
+  BarkRadius: 5
+  BarkCooldown: 1
   MaxBarkAmmo: 5
   ReloadTimeoutTime: 1
   BiteDamage: 25
-  BiteRange: 0.5
+  BiteRange: 1.5
   BiteRadius: 0.5
-  BiteCooldown: 0.5
+  BiteCooldown: 1
   CanReload: 1
   CommandRange: 500
   CommandLayerMask:

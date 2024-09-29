@@ -264,7 +264,7 @@ public class Player : MonoBehaviour
         int randomId = UnityEngine.Random.Range(0, barks.Count);
         BarkSrc.clip = barks[randomId];
         BarkSrc.Play();
-        CanBark = true; 
+        CanBark = false; 
         BarkCooldownRemaining = BarkCooldown;
     }
 
@@ -281,7 +281,7 @@ public class Player : MonoBehaviour
         }
         OnBite?.Invoke();
         BiteSrc.Play();
-        CanBite = true;
+        CanBite = false;
         BiteCooldownRemaining = BiteCooldown;
     }
 
@@ -349,5 +349,13 @@ public class Player : MonoBehaviour
         if (PlayerCamera.GetComponent<DogVisionPostProcess>()) {
             PlayerCamera.GetComponent<DogVisionPostProcess>().enabled = isOn;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.DrawSphere(MouthPosition.position, BarkRadius);
+        //Gizmos.DrawSphere(MouthPosition.position + (MouthPosition.forward * BarkRange), BarkRadius);
+        // Gizmos.DrawSphere(MouthPosition.position, BiteRadius);
+        // Gizmos.DrawSphere(MouthPosition.position + (MouthPosition.forward * BiteRange), BiteRadius);
     }
 }
