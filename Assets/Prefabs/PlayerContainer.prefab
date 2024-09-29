@@ -480,9 +480,9 @@ MonoBehaviour:
   CurrentState: 0
   SpeedLines: {fileID: 8731247112942161233}
   MouseSensitivity: 500
-  MovementSpeed: 10
-  AccelerationSpeed: 5
-  JumpSpeed: 5
+  MovementSpeed: 8
+  AccelerationSpeed: 8
+  JumpSpeed: 4
   CanJump: 1
   DashSpeed: 25
   DashCoolDown: 2
