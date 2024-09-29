@@ -32,6 +32,8 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void GoToTitleScreen() {
+        Cursor.lockState = CursorLockMode.None;
+        LoadingScreen.Instance.LoadNewScene("TitleScreen");
     }
 
     void Update()
