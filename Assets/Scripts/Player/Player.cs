@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     private Vector3 targetVelocity;
     private float fallSpeed;
     private bool isJumping = false;
+    private bool isDashing = false;
     
     public event Action OnBark;
     public event Action OnBite;
@@ -132,8 +133,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash)
         {
             CanDash = false;
-            DashCooldownRemaining = DashCoolDown;
-            StrafeVelocity += targetVelocity * DashSpeed;
+            isDashing = true;
         }
     }
     
@@ -156,6 +156,13 @@ public class Player : MonoBehaviour
         {
             fallSpeed = JumpSpeed;
             isJumping = false;
+        }
+
+        if (isDashing)
+        {
+            DashCooldownRemaining = DashCoolDown;
+            StrafeVelocity += targetVelocity * DashSpeed;
+            isDashing = false;
         }
         StrafeVelocity = Vector3.Lerp(StrafeVelocity, targetVelocity * MovementSpeed, AccelerationSpeed * Time.deltaTime);
         PlayerRigidBody.velocity = new Vector3(StrafeVelocity.x, fallSpeed, StrafeVelocity.z); 
