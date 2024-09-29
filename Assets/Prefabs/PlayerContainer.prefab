@@ -380,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 2425265611978958115}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.09, y: 0, z: 0.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -484,17 +484,19 @@ MonoBehaviour:
   MouseSensitivity: 500
   MovementSpeed: 8
   AccelerationSpeed: 8
+  MinAccelerationSpeed: 2
+  AccelerateT: 1
   JumpSpeed: 4
   CanJump: 1
   DashSpeed: 25
-  DashCoolDown: 2
-  BarkDamage: 10
+  DashCoolDown: 1
+  BarkDamage: 1
   BarkRange: 15
   BarkRadius: 5
   BarkCooldown: 0.5
   MaxBarkAmmo: 5
   ReloadTimeoutTime: 1
-  BiteDamage: 25
+  BiteDamage: 5
   BiteRange: 1.5
   BiteRadius: 0.5
   BiteCooldown: 1
