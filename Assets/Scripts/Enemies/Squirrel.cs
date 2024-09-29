@@ -19,6 +19,7 @@ public class Squirrel : EnemyBase
     public NavMeshAgent NavAgent;
     public Rigidbody player;
     public Rigidbody rb;
+    public int Damage = 5;
     public float Speed = 5f;
     public float projectileSpeed = 8f;
     public float projectileSpawnDistFromPlayer = 0.5f;
@@ -34,6 +35,16 @@ public class Squirrel : EnemyBase
 
     void Start()
     {
+        if (PersistData.Instance) {
+            Difficulty currDiff = PersistData.Instance.CurrDifficulty;
+            if (currDiff == Difficulty.Easy) {
+                MaxHp = 1;
+                Damage /= 2;
+            } else if (currDiff == Difficulty.Helldogger) {
+                MaxHp *= 2;
+                Damage = (int) ((float)Damage * 1.5f); //raw dog
+            }
+        }
         base.Start();
         NavAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
@@ -161,7 +172,7 @@ public class Squirrel : EnemyBase
         Vector3 spawnPos = rb.position + new Vector3(0f, 0.5f, 0f);
         
         Instantiate(projectilePrefab, spawnPos, quaternion.identity)
-            .GetComponent<AcornProjectile>().Init(projectileSpeed, shootDir);
+            .GetComponent<AcornProjectile>().Init(projectileSpeed, shootDir, Damage);
     }
 
     // public void OnDrawGizmos()
