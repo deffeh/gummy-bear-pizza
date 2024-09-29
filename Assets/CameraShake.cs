@@ -36,6 +36,7 @@ public class CameraShake : MonoBehaviour
 
     public static void Shake(float power)
     {
+        if (!instance) return;
         instance.InstanceShake(power);
     }
 
