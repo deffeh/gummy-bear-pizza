@@ -378,6 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 0
   MaxHealth: 0
+  maxDistFromPlayer: 35
   CurrentState: 0
   HumanRigidBody: {fileID: 6249540078650686519}
   HumanNavMeshAgent: {fileID: 212622003823398624}
