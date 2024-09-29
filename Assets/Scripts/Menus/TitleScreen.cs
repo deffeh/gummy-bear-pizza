@@ -36,6 +36,11 @@ public class TitleScreen : MonoBehaviour
         ExitButton.onClick.AddListener(() => {
             Application.Quit();
         });
+
+        if (LoadingScreen.Instance) {
+            LoadingScreen.Instance.GetComponent<AudioSource>().Play();
+        }
+        
         StartAnim();
     }
 
