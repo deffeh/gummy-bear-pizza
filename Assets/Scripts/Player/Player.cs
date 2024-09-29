@@ -314,6 +314,8 @@ public class Player : MonoBehaviour
 
     void BeginReload()
     {
+        if (BarkAmmo >= MaxBarkAmmo)
+            return;
         Human.BeginReload();
     }
 
