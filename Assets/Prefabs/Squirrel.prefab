@@ -48,16 +48,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8ce9c97f921f243a109c62b7f257f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 0
-  CurHp: 0
-  Sprite: {fileID: 0}
-  DeathEffect: {fileID: 0}
-  NavAgent: {fileID: 0}
+  MaxHp: 1
+  CurHp: 1
+  Sprite: {fileID: 8584385320039890725}
+  DeathEffect: {fileID: 8521852251528875114, guid: e0e30ed89133ab749872df63229debcb, type: 3}
+  projectilePrefab: {fileID: 6267157262895107356, guid: f923875a4d471ad4b9b22364f1bde543, type: 3}
+  NavAgent: {fileID: 2158375174782871251}
   player: {fileID: 0}
-  rb: {fileID: 0}
-  Health: 50
-  Speed: 5
-  AttackCooldown: 1
+  rb: {fileID: 1925338825689528150}
+  Speed: 3
+  projectileSpeed: 8
+  projectileSpawnDistFromPlayer: 0.5
+  AttackCooldown: 2
   MaxAttackRange: 15
 --- !u!54 &1925338825689528150
 Rigidbody:
@@ -67,7 +69,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376417012921356438}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -139,6 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1338625005515544511}
   - component: {fileID: 8584385320039890725}
+  - component: {fileID: 3258369152672316701}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -213,3 +216,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3258369152672316701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254511173351460195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cd8a4ef19b3c8e449adfb3d35a41433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
