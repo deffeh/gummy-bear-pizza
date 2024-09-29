@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealAmount: 10
+  PickupEffect: {fileID: 3831009009577787676, guid: a569061a64d47ab4da6a42653f9bfbb2, type: 3}
 --- !u!1001 &2812747447434550103
 PrefabInstance:
   m_ObjectHideFlags: 0
