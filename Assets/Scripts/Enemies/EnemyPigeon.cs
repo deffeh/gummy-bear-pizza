@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyPigeon : EnemyBase
 {
@@ -14,6 +15,7 @@ public class EnemyPigeon : EnemyBase
     public GameObject PigeonProjectile;
     private Rigidbody rb;
     public AudioSource audiosrc;
+    private float t = 0;
     
     // Start is called before the first frame update
     protected void Start()
@@ -22,13 +24,14 @@ public class EnemyPigeon : EnemyBase
         CurState = PigeonState.Idle;
         rb = GetComponent<Rigidbody>();
         StartCoroutine(FireProjectile());
+        t += Random.Range(-100f, 100f);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        float t = (Time.time * FlightRate) % 1f;
+        t = (t + (Time.deltaTime * FlightRate)) % 1f;
         rb.AddForce(Vector3.up * FlightCurve.Evaluate(t) * FlightStrength * Time.deltaTime * rb.mass);
         switch (CurState)
         {
@@ -42,6 +45,8 @@ public class EnemyPigeon : EnemyBase
 
     private IEnumerator FireProjectile()
     {
+        yield return new WaitForSeconds(Random.Range(-5f, 5f));
+
         float t = 0;
         while (true)
         {
