@@ -25,6 +25,7 @@ public class TitleScreen : MonoBehaviour
             PauseMenu.Instance.AllowPause = false;
             PauseMenu.Instance.amDying = false;
         }
+        Cursor.lockState = CursorLockMode.None;
 
         PlayButton.onClick.AddListener(PlayGame);
         SettingsButton.onClick.AddListener(() => {
