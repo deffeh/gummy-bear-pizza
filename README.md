@@ -8,18 +8,25 @@ Get to the end for a fun surprise!
 ## gummy-bear-pizza
 ### Art
 Faustin Puno - 2D Art/Animation
+
 Nicole Cao - 2D Art
+
 Jaime Lopez - 3D Art
 
 ### Audio
 Lianming Yan - SFX
+
 Sourav Banerjee - Music
 
 ### Code
 Benjamin Pham - Programming / VFX Art
+
 Davie Nguyen - Programming
+
 Kenneth Le - Programming
+
 Kaiden Zapanta - Programming
+
 Ronghua Wong - Programming / 2D Art
 
 ### Consulting
