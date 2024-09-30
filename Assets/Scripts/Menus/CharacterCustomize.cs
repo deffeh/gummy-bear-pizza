@@ -73,6 +73,7 @@ public class CharacterCustomize : MonoBehaviour
 
         //load game
         PersistData.Instance.PlaySound();
+        Cursor.lockState = CursorLockMode.Locked;
         LoadingScreen.Instance.LoadNewScene("BaseScene");
     }
 
