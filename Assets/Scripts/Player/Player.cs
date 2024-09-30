@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     // Look
     public float MouseSensitivity;
     private float XRotation;
+    private float YRotation;
 
     // Movement
     public float MovementSpeed;
@@ -117,6 +118,9 @@ public class Player : MonoBehaviour
             SetDogVision(PauseMenu.Instance.Settings.IsDogVisionOn());
             MouseSensitivity = PauseMenu.Instance.Settings.GetSensitivity() * 200f;
         }
+
+        XRotation = transform.rotation.y;
+        YRotation = 0;
     }
 
     private void FixedUpdate()
@@ -143,7 +147,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R) && CanReload)
                 BeginReload();
         }
-        Model.position = Vector3.Lerp(Model.position, transform.position, 30 * Time.deltaTime);
+        Model.position = Vector3.Lerp(Model.position, transform.position, 15 * Time.deltaTime);
         Model.rotation = transform.rotation;
     }
 
@@ -196,9 +200,10 @@ public class Player : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity / 150f;
         float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity / 150f;
-        transform.Rotate(Vector3.up * mouseX);
+        YRotation += mouseX;
         XRotation -= mouseY;
         XRotation = Mathf.Clamp(XRotation, -90, 90);
+        transform.localRotation = Quaternion.Euler(0, YRotation, 0);
         PlayerCamera.transform.localRotation = Quaternion.Euler(XRotation, 0, 0);
     }
 
