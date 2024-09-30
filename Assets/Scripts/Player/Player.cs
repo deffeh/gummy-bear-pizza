@@ -198,8 +198,8 @@ public class Player : MonoBehaviour
     // Called every frame to update player look
     void UpdateLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity / 200f;
-        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity / 200f;
+        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity / 500f;
+        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity / 500f;
         YRotation += mouseX;
         XRotation -= mouseY;
         XRotation = Mathf.Clamp(XRotation, -90, 90);
